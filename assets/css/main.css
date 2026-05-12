@@ -3336,10 +3336,19 @@ input, select, textarea {
 				left: 8px;
 				width: 50px;
 				height: 34px;
-	.ptero-video {
-	    width: 30%;
-	    display: block;
+		.ptero-video {
+		    width: 30%;
+		    display: block;
+		    margin: 0 auto;
+		    border-radius: 12px;
+				}
+		.video-container {
+	    width: 60%;
 	    margin: 0 auto;
-	    border-radius: 12px;
+			}
+	
+	.video-container video {
+	    width: 100%;
+	    display: block;
 			}
 	}
