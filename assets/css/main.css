@@ -3354,3 +3354,17 @@ input, select, textarea {
     margin: 0 auto;
     border-radius: 12px;
 }
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
