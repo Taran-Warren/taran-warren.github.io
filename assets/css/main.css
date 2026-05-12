@@ -3336,7 +3336,9 @@ input, select, textarea {
 				left: 8px;
 				width: 50px;
 				height: 34px;
-		.ptero-video {
+
+	}
+			.ptero-video {
 		    width: 30%;
 		    display: block;
 		    margin: 0 auto;
@@ -3351,4 +3353,3 @@ input, select, textarea {
 	    width: 100%;
 	    display: block;
 			}
-	}
