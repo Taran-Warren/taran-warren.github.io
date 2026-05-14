@@ -3391,7 +3391,7 @@ input, select, textarea {
     transform: rotate(90deg) scale(1.4);
     transform-origin: center;
     display: inline-block;
-
+	outline: 3px solid blue;
     animation: wobble 1.5s ease-in-out infinite;
 }
 
