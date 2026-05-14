@@ -3418,3 +3418,10 @@ input, select, textarea {
         transform: scaleX(-1) rotate(-6deg);
     }
 }
+.sidebar-ptero {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    z-index: 999;
+}
