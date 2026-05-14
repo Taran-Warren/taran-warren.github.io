@@ -3368,20 +3368,32 @@ input, select, textarea {
     display: block;
     border-radius: 8px;
 }
+/* =========================
+   SIDEBAR BASE
+========================= */
+
 .sidebar {
+    position: relative;
+    overflow: hidden;
     min-height: 100vh;
     padding: 2em;
     box-sizing: border-box;
 }
 
-/* movement only */
+/* =========================
+   PTERODACTYL BASE
+========================= */
+
 .sidebar-ptero {
     position: absolute;
     top: -200px;
-    right: 0;
     width: 180px;
     pointer-events: none;
+    z-index: 999;
 }
+
+/* multiple instances positions + speeds */
+
 .ptero1 {
     right: 10%;
     animation: fly1 14s linear infinite;
@@ -3396,72 +3408,52 @@ input, select, textarea {
     right: 70%;
     animation: fly3 18s linear infinite;
 }
-/* rotation + flip + scale */
+
+/* =========================
+   VIDEO + ROTATION + WOBBLE
+========================= */
+
 .ptero-inner {
-    transform: rotate(90deg) scale(1.4);
+    transform: rotate(90deg) scale(1.3);
     transform-origin: center;
     display: inline-block;
     animation: wobble 1.5s ease-in-out infinite;
 }
 
-/* video styling only */
 .ptero-inner video {
     width: 100%;
     display: block;
-
     transform: scaleX(-1);
 }
 
-@keyframes flyDown {
-    0% {
-        top: -220px;
-    }
+/* =========================
+   FLIGHT PATHS
+========================= */
 
-    100% {
-        top: 100%;
-    }
-}
-@keyframes wobble {
-    0% {
-        transform: rotate(90deg) scale(1.4) translateY(0px) rotate(-4deg);
-    }
-
-    50% {
-        transform: rotate(90deg) scale(1.4) translateY(-6px) rotate(4deg);
-    }
-
-    100% {
-        transform: rotate(90deg) scale(1.4) translateY(0px) rotate(-4deg);
-    }
-}
-.wrapper .row {
-    align-items: stretch;
-}
-.col-4 {
-    display: flex;
-}
-
-.sidebar {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    min-height: 100vh;
-}
 @keyframes fly1 {
-    0%   { top: -200px; transform: translateX(0); }
-    100% { top: 110%; transform: translateX(40px); }
+    from { top: -200px; transform: translateX(0); }
+    to   { top: 110%; transform: translateX(40px); }
 }
 
 @keyframes fly2 {
-    0%   { top: -200px; transform: translateX(0); }
-    100% { top: 110%; transform: translateX(-60px); }
+    from { top: -200px; transform: translateX(0); }
+    to   { top: 110%; transform: translateX(-60px); }
 }
 
 @keyframes fly3 {
-    0%   { top: -200px; transform: translateX(0); }
-    100% { top: 110%; transform: translateX(20px); }
+    from { top: -200px; transform: translateX(0); }
+    to   { top: 110%; transform: translateX(20px); }
 }
-.ptero-inner {
-    transform: rotate(90deg) scale(1.3);
-    animation: wobble 1.5s ease-in-out infinite;
+
+/* =========================
+   WOBBLE (FLAPPING FEEL)
+========================= */
+
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(90deg) scale(1.3) translateY(0px) rotate(-4deg);
+    }
+    50% {
+        transform: rotate(90deg) scale(1.3) translateY(-6px) rotate(4deg);
+    }
 }
