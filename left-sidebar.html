@@ -78,13 +78,7 @@
 							            </div>
 							        </div>
 							
-							        <section>
-							            <header>
-							                <h3>An overview</h3>
-							            </header>
-							            <p>On the right is a animation of the pterodactyl flapping this is the mechanism we focused on. Below will describe the decisions made in its creation.</p>
-							        </section>
-							
+
 							        <section>
 							            <header>
 							                <h3>Amet Lorem Tempus</h3>
@@ -114,6 +108,11 @@
 									<!-- Content -->
 										<div class="content">
 											<section>
+											<header>
+							                	<h3>An overview</h3>
+											</header>
+											<p>This section describes the design and development process of an animatronic pterodactyl prototype. With the requirement of one articulating part in this case the wings flapping. This project was developed as part of a structured product development pipeline going from 2D designs to a virtual model and finally a physical manufactured model.</p>
+							            	<p>The focus of the project was not purely aesthetic but exploring a number of development techniques. The mechanical idea was inspired by ligaments for the actuation of the wings and a lightweight 3D printed structure. </p>
 											<div class="video-container">
 												<video class="ptero-video" autoplay loop muted playsinline>
 												    <source src="videos/flappingPterodactyl.mp4" type="video/mp4">
@@ -123,17 +122,20 @@
 													<br>
 													<h3>The Concept</h3>
 												</header>
-												<p>Given the task of creating an animatronic artifact with one articulating part. To meet these criteria, we decided on a pterodactyl with flapping wings as the articulating section.</p>
+												<p>The initial design brief required an artifact with an articulating mechanism. After an initial idea discussion, a pterodactyl was chosen as the inspiration of the project with its wings being the articulating mechanism. </p>
+												<p>Initially a more complex pterodactyl model was proposed and explored this would have had much more movement. Having a state where the pterodactyl walks on its wings and another where the wings would lock and be able to flap. This was deemed as too ambitious for the constraints of the project. Although initial designs and mechanisms were designed as seen below.</p>
+												<p>After initial design and toning back the scale of the project. A more basic approach was developed where the pterodactyl would stay in the flying position and would flap its wings based on a ligament inspired pulley system. A motor (or manual input in the prototype) would apply force to the string connected to the upper wing which would raise it into the air. This was countered by an elastic string to restore it to the downward position and stop the wings from going limp when held in a flipped orientation. </p>
+												<p>As seen below are the early design iterations developed to contain the ligaments and allow them to operate:</p>
 												<div class="image-grid">
 												    <img src="images/EyeSystem.png" alt="">
 												    <img src="images/rollerSystem.png" alt="">
 												    <img src="images/internalRollers.png" alt="">
 												    <img src="images/internalDoubleRollers.png" alt="">
 												</div>
-												<p>Shown above are the initial designs I came up with in order to move the limbs. I took inspiration from ligaments. The idea was a motor in the body would pull on some sort of string attached to the outer limb raising the limb. The designs are different ways to connect the string to the limbs.</p>
-												<p>The first image shows a design inspired by fishing rod eyes. This design was not used in the final as although strong when made from metal, fibreglass, carbon fibre we are using 3d printing so the design was not suitable.</p>
-												<p>The second design instead shows raised rollers. This design was a set on protruding rollers these would have greater strength than the eyes and would better survive the compressive force. However if we wished to add a “skin” layer other the model there protrusions would interfere with it and so were not suitable.</p>
-												<p>The third design was similar to the second except the rollers were made internally. This design fixed the previous issue of interfering with the skin. Overall this design was worth prototyping however in order to bring the wing back down after raising it was mirrored top and bottom as seen in image four.</p>
+												<p>Image 1: External loop guides (inspired by eyes on fishing rods) this approach used a set of raised rings extended out of the arm that would guide the tension lines. Although mechanically simple it was unsuitable for a 3D printed plastic model due to its fragility at the small scales.</p>
+												<p>Image 2: External roller guides this approach was similar to Image 1. Its more robust design fixed many of the issues show previously. However, due to wanting a continuous outer skin to wrap the wings this was not suitable. This is because it would interfere with the skin and must stab though it. Either cutting it or having large protrusions in the skin.</p>
+												<p>Image 3: To fix the issue with the previous design the roller system was moved internally. This allowed the roller system to work without interfering with the skin as it left the surface clear.</p>
+												<p>Image 4: The design of image 3 was chosen and was mirrored to allow both the raising line and the elastic tension line to be internal. This design was taken forward to the 3D prototyping stage.</p>
 											</section>
 										</div>
 										<model-viewer
