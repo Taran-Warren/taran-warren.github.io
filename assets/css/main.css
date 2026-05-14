@@ -3371,45 +3371,7 @@ input, select, textarea {
 .sidebar {
     position: relative;
     overflow: hidden;
-}
-.sidebar-ptero {
-    position: absolute;
-    top: -180px;
-    right: 10px;
-
-    z-index: 10;
-    pointer-events: none;
-
-    animation: flySidebar 12s linear infinite;
-}
-
-.sidebar-ptero img {
-    width: 120px;
-    display: block;
-}
-@keyframes flySidebar {
-
-    0% {
-        top: -180px;
-        transform: scaleX(-1) rotate(-8deg);
-    }
-
-    25% {
-        transform: scaleX(-1) rotate(6deg) translateX(-10px);
-    }
-
-    50% {
-        transform: scaleX(-1) rotate(-4deg) translateX(5px);
-    }
-
-    75% {
-        transform: scaleX(-1) rotate(5deg) translateX(-8px);
-    }
-
-    100% {
-        top: 100%;
-        transform: scaleX(-1) rotate(-8deg);
-    }
+    min-height: 800px;
 }
 
 .sidebar-ptero {
@@ -3419,15 +3381,19 @@ input, select, textarea {
 
     width: 180px;
 
-    z-index: 10;
-    pointer-events: none;
+    z-index: 100;
 
     animation: flySidebar 12s linear infinite;
+
+    pointer-events: none;
 }
+
 .sidebar-ptero video {
     width: 100%;
+    height: auto;
     display: block;
 }
+
 @keyframes flySidebar {
 
     0% {
