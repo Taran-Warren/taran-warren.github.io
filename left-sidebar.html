@@ -137,6 +137,11 @@
 												<p>Image 3: To fix the issue with the previous design the roller system was moved internally. This allowed the roller system to work without interfering with the skin as it left the surface clear.</p>
 												<p>Image 4: The design of image 3 was chosen and was mirrored to allow both the raising line and the elastic tension line to be internal. This design was taken forward to the 3D prototyping stage.</p>
 											</section>
+											<header>
+													<br>
+													<h3>Virtual Prototyping</h3>
+											</header>
+											<p>Blender was chosen as the development tool for the project due to its combined strength for both organic sculpting and mechanical modelling workflows. Along with the available skillset within the group. This allowed for both the rigid structural components (joints and supports) and the more organic sections (head, body and legs) to be created in one application.</p>
 										</div>
 										<model-viewer
 										    src="models/ptarm2.glb"
@@ -151,6 +156,7 @@
 											<h3>The Design</h3>
 											<p>The design makes use of print in place to create the join between the shoulder (blue) and the upper wing (white). This was needed as without print in place, the pin joining the two would have had to be an individual part secured after the print this way it’s on solid piece.</p>
 											<p>The shoulder(blue) is set into the body and does not move. The upper wing (white) rotates around the pin that bisects the shoulder as seen above. This motion will be controlled by ligaments (string or some kind of twine) along the top groove. The bottom groove will have an elasticated ligament to keep the arm in tension and return it down once realised. This prevents the arms from going loose in case model it is flipped upside down.</p>
+											<p>The design was composed of 3 main sections. The wing as shown below is made from a shoulder joint (blue) which sockets into the body and the upper wing (white) which rotates around a print in place pin connected to the shoulder. Using the internal channels the tensioned ligament on top would pull on the upper wing raising it. Once released the elastic ligament in the bottom channel would pull it back down when repeated this simulated flapping.</p>
 											<model-viewer
 											    src="models/ptBody.glb"
 											    alt="3D Pterodactyl Model"
@@ -158,11 +164,18 @@
 											    camera-controls
 											    style="width: 100%; height: 500px;background-color: #222;">
 											</model-viewer>
-											<p>The image above shows the model of the body. There are two holes for the arms to slot into and a hole at the bottom for the stand. The upper portion of the body is holo this allows the ligaments to pass through.</p>
-											<p>The head and legs are purely decorational and are both solid. They serve no mechanical purpose.</p>
+											<p>The decision to use print-in-place joint was critical in reducing assembly complexity. This is crucial if the prototype was taken into full production. As traditional pinned joints would require post-print assembly adding an extra step to the production pipeline and possible increasing failure points. By integrating the pivot directly into the print structural integrity and mechanical reliability is improved.</p>
+											<header>
+													<br>
+													<h3>Design decisions of the body and internal structure</h3>
+											</header>
+											<p>The internal structure of the model was designed to be both functional and manufacturable.</p>
+											<P>Key design features include:</P>
+											<p>The top half of the body is a hollowed internal cavity allowing the ligament system to route internally. This allowed for both the manual and future motorised actuation. Having all mechanics internally allows for maximum function while keeping a more realistic external appearance. The below image shows where the shoulders enter the cavity.</p>
 											<img src="images/insidePt.PNG" style="width:100%; max-width:500px;">
-											<p>The image above shows an internal view, as you can see the blue shoulders protruding in. Two internal pillars where added to keep the ligaments moving in curves and not catching on edges. Additionaly this improves internal structural integrity.</p>
-											<p>As seen in the image the base enters and is holo, this will allow manual use of the pterodactyl without using motors by passing the ligaments down into the base where it can be controlled.</p>
+											<p>Internal pillars as shown in the above image were implemented to prevent internal snagging and maintain smooth curvature of tension lines. This improves the mechanical efficiency and reduces strain on the future motors and the human operators. Reducing overall wear giving the model a longer lifetime. </p>
+											<p>Integrated base socket gives a seamless connection between the base and the body. The hollow top of the base allows for the ligaments to be accessible from the base. Giving access for manual control systems. This was crucial for the manual operation.</p>
+											<p>The head and legs serve no functional use and are purely decorative so were designed as static structural elements. This allowed all focus to be on the mechanical system design without adding additional complexity.</p>
 										</section>
 								</div>
 							</div>
