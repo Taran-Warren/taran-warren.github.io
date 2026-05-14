@@ -3390,6 +3390,7 @@ input, select, textarea {
 .ptero-inner {
     transform: rotate(90deg) scale(1.4);
     transform-origin: center;
+	outline: 3px solid red;
 }
 
 /* video styling only */
