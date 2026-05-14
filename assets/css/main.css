@@ -3371,7 +3371,8 @@ input, select, textarea {
 .sidebar {
     position: relative;
     overflow: hidden;
-    min-height: 800px;
+
+    height: 100vh;   /* full screen height */
 }
 
 /* movement only */
