@@ -3376,29 +3376,26 @@ input, select, textarea {
 
 .sidebar-ptero {
     position: absolute;
-    top: -220px;
+    top: -200px;
     right: 0;
-
     width: 180px;
+    z-index: 999;
 
-    z-index: 100;
-
-    animation: flySidebar 12s linear infinite;
+    animation: flyDown 12s linear infinite;
 
     pointer-events: none;
 }
 
 .sidebar-ptero video {
     width: 100%;
-    height: auto;
     display: block;
 }
 
-@keyframes flySidebar {
+@keyframes flyDown {
 
     0% {
         top: -220px;
-        transform: scaleX(-1) rotate(-6deg);
+        transform: scaleX(-1) rotate(-5deg);
     }
 
     25% {
@@ -3406,22 +3403,15 @@ input, select, textarea {
     }
 
     50% {
-        transform: scaleX(-1) rotate(-3deg) translateX(5px);
+        transform: scaleX(-1) rotate(-3deg) translateX(6px);
     }
 
     75% {
-        transform: scaleX(-1) rotate(5deg) translateX(-6px);
+        transform: scaleX(-1) rotate(5deg) translateX(-5px);
     }
 
     100% {
-        top: 100%;
-        transform: scaleX(-1) rotate(-6deg);
+        top: 1100px;
+        transform: scaleX(-1) rotate(-5deg);
     }
-}
-.sidebar-ptero {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 200px;
-    z-index: 999;
 }
