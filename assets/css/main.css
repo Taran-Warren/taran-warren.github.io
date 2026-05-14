@@ -3420,6 +3420,7 @@ input, select, textarea {
     display: inline-block;
     animation: wobble 1.5s ease-in-out infinite;
     transform-origin: center;
+	transform: rotate(90deg) scale(1.8);
 }
 
 .ptero-inner video {
