@@ -3374,26 +3374,30 @@ input, select, textarea {
     min-height: 800px;
 }
 
+/* movement only */
 .sidebar-ptero {
     position: absolute;
-    top: -200px;
+    top: -220px;
     right: 0;
-    width: 180px;
+    width: 220px;
     z-index: 999;
 
     animation: flyDown 12s linear infinite;
-
     pointer-events: none;
 }
+
+/* rotation + flip + scale */
+.ptero-inner {
+    transform: rotate(90deg) scale(1.4);
+    transform-origin: center;
+}
+
+/* video styling only */
 .ptero-inner video {
     width: 100%;
     display: block;
 
     transform: scaleX(-1);
-}
-.sidebar-ptero video {
-    width: 100%;
-    display: block;
 }
 
 @keyframes flyDown {
