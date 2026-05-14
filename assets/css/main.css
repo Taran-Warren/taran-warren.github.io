@@ -3390,7 +3390,9 @@ input, select, textarea {
 .ptero-inner {
     transform: rotate(90deg) scale(1.4);
     transform-origin: center;
-	outline: 3px solid red;
+    display: inline-block;
+
+    animation: wobble 1.5s ease-in-out infinite;
 }
 
 /* video styling only */
@@ -3408,5 +3410,18 @@ input, select, textarea {
 
     100% {
         top: 1100px;
+    }
+}
+@keyframes wobble {
+    0% {
+        transform: rotate(90deg) scale(1.4) translateY(0px) rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(90deg) scale(1.4) translateY(-6px) rotate(4deg);
+    }
+
+    100% {
+        transform: rotate(90deg) scale(1.4) translateY(0px) rotate(-4deg);
     }
 }
