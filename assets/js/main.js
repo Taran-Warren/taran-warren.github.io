@@ -1,96 +1,59 @@
-/*
-	Twenty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+document.addEventListener("DOMContentLoaded", () => {
 
-(function($) {
+    const sidebar = document.querySelector('.sidebar');
 
-	var	$window = $(window),
-		$body = $('body'),
-		$header = $('#header'),
-		$banner = $('#banner');
+    function spawnPtero() {
 
-	// Breakpoints.
-		breakpoints({
-			wide:      [ '1281px',  '1680px' ],
-			normal:    [ '981px',   '1280px' ],
-			narrow:    [ '841px',   '980px'  ],
-			narrower:  [ '737px',   '840px'  ],
-			mobile:    [ null,      '736px'  ]
-		});
+        const ptero = document.createElement('div');
+        ptero.className = 'sidebar-ptero';
 
-	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+        const inner = document.createElement('div');
+        inner.className = 'ptero-inner';
 
-	// Scrolly.
-		$('.scrolly').scrolly({
-			speed: 1000,
-			offset: function() { return $header.height() + 10; }
-		});
+        const video = document.createElement('video');
 
-	// Dropdowns.
-		$('#nav > ul').dropotron({
-			mode: 'fade',
-			noOpenerFade: true,
-			expandMode: (browser.mobile ? 'click' : 'hover')
-		});
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
 
-	// Nav Panel.
+        video.src = 'images/flying.webm';
 
-		// Button.
-			$(
-				'<div id="navButton">' +
-					'<a href="#navPanel" class="toggle"></a>' +
-				'</div>'
-			)
-				.appendTo($body);
+        inner.appendChild(video);
+        ptero.appendChild(inner);
+        sidebar.appendChild(ptero);
 
-		// Panel.
-			$(
-				'<div id="navPanel">' +
-					'<nav>' +
-						$('#nav').navList() +
-					'</nav>' +
-				'</div>'
-			)
-				.appendTo($body)
-				.panel({
-					delay: 500,
-					hideOnClick: true,
-					hideOnSwipe: true,
-					resetScroll: true,
-					resetForms: true,
-					side: 'left',
-					target: $body,
-					visibleClass: 'navPanel-visible'
-				});
+        // RANDOM X POSITION
+        const x = Math.random() * 70;
+        ptero.style.left = `${x}%`;
 
-		// Fix: Remove navPanel transitions on WP<10 (poor/buggy performance).
-			if (browser.os == 'wp' && browser.osVersion < 10)
-				$('#navButton, #navPanel, #page-wrapper')
-					.css('transition', 'none');
+        // RANDOM SIZE
+        const scale = 0.6 + Math.random() * 1.2;
+        const size = 120 * scale;
 
-	// Header.
-		if (!browser.mobile
-		&&	$header.hasClass('alt')
-		&&	$banner.length > 0) {
+        ptero.style.width = `${size}px`;
 
-			$window.on('load', function() {
+        // RANDOM SPEED
+        const duration = 15 + Math.random() * 20;
 
-				$banner.scrollex({
-					bottom:		$header.outerHeight(),
-					terminate:	function() { $header.removeClass('alt'); },
-					enter:		function() { $header.addClass('alt reveal'); },
-					leave:		function() { $header.removeClass('alt'); }
-				});
+        // RANDOM ANIMATION
+        const anims = ['fly1', 'fly2', 'fly3'];
+        const anim = anims[Math.floor(Math.random() * anims.length)];
 
-			});
+        ptero.style.animation = `${anim} ${duration}s linear forwards`;
 
-		}
+        // REMOVE AFTER FINISH
+        setTimeout(() => {
+            ptero.remove();
+        }, duration * 1000);
+    }
 
-})(jQuery);
+    // initial spawn
+    spawnPtero();
+
+    // continuous spawning
+    setInterval(() => {
+        spawnPtero();
+    }, 1800);
+
+});
