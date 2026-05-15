@@ -3369,80 +3369,60 @@ input, select, textarea {
     border-radius: 8px;
 }
 /* =========================
-   SIDEBAR CONTAINER FIX
+   SIDEBAR CONTAINER (CRITICAL FIX)
 ========================= */
 
 .sidebar {
     position: relative;
     overflow: hidden;
-    min-height: 100vh;
+    min-height: 100%; /* IMPORTANT: not vh */
 }
 
-/* text always above birds */
+/* ensures parent row defines height properly */
+.row.gtr-150 {
+    align-items: stretch;
+}
+
+/* =========================
+   CONTENT ABOVE BIRDS
+========================= */
+
 .sidebar section,
-.sidebar .content {
+.content {
     position: relative;
     z-index: 10;
 }
 
 /* =========================
-   BIRDS BASE LAYER
+   BIRD LAYER
 ========================= */
 
 .sidebar-ptero {
     position: absolute;
-    left: 20px;              /* 👈 forces LEFT SIDE ONLY */
+    top: 0;
+    left: 0;
     width: 180px;
     pointer-events: none;
     z-index: 1;
+    will-change: transform;
 }
+
+/* spread birds horizontally inside column */
+.ptero1 { left: 10%; animation: fly1 16s linear infinite; }
+.ptero2 { left: 40%; animation: fly2 12s linear infinite; }
+.ptero3 { left: 70%; animation: fly3 20s linear infinite; }
 
 /* =========================
-   INDIVIDUAL BIRDS
-========================= */
-
-.ptero1 {
-    animation: fly1 14s linear infinite;
-}
-
-.ptero2 {
-    animation: fly2 10s linear infinite;
-}
-
-.ptero3 {
-    animation: fly3 18s linear infinite;
-}
-
-/* =========================
-   FLIGHT PATH (FULL HEIGHT FIX)
-========================= */
-
-@keyframes fly1 {
-    0%   { top: -200px; transform: translateX(0); }
-    100% { top: 120%; transform: translateX(60px); }
-}
-
-@keyframes fly2 {
-    0%   { top: -200px; transform: translateX(0); }
-    100% { top: 120%; transform: translateX(-80px); }
-}
-
-@keyframes fly3 {
-    0%   { top: -200px; transform: translateX(0); }
-    100% { top: 120%; transform: translateX(30px); }
-}
-
-/* =========================
-   INNER ROTATION (FIXED)
+   INNER ROTATION / FLAP
 ========================= */
 
 .ptero-inner {
+    display: inline-block;
     transform: rotate(90deg) scale(1.6);
     transform-origin: center;
     animation: wobble 1.5s ease-in-out infinite;
 }
 
-/* IMPORTANT: only flip video, not transform container */
 .ptero-inner video {
     width: 100%;
     display: block;
@@ -3450,7 +3430,27 @@ input, select, textarea {
 }
 
 /* =========================
-   WOBBLE (NO CONFLICTS)
+   BULLETPROOF FLIGHT
+   (RELATIVE TO SIDEBAR HEIGHT)
+========================= */
+
+@keyframes fly1 {
+    0%   { transform: translateY(-20%); }
+    100% { transform: translateY(120%); }
+}
+
+@keyframes fly2 {
+    0%   { transform: translateY(-40%); }
+    100% { transform: translateY(130%); }
+}
+
+@keyframes fly3 {
+    0%   { transform: translateY(-60%); }
+    100% { transform: translateY(140%); }
+}
+
+/* =========================
+   WOBBLE (SAFE: no transform conflict with fly)
 ========================= */
 
 @keyframes wobble {
