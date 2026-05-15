@@ -3403,7 +3403,7 @@ input, select, textarea {
 /* horizontal spread */
 .ptero1 { left: 10%; animation: fly1 22s linear infinite; }
 .ptero2 { left: 35%; animation: fly2 18s linear infinite; }
-.ptero3 { left: 55%; animation: fly3 26s linear infinite; }
+.ptero3 { left: 30%; animation: fly3 26s linear infinite; }
 
 /* =========================
    INNER ANIMATION
