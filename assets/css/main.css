@@ -3368,10 +3368,6 @@ input, select, textarea {
     display: block;
     border-radius: 8px;
 }
-/* =========================
-   SIDEBAR BASE
-========================= */
-
 .sidebar {
     position: sticky;
     top: 0;
@@ -3384,8 +3380,6 @@ input, select, textarea {
     width: 180px;
     pointer-events: none;
     z-index: 1;
-
-    animation: fly linear infinite;
 }
 
 .ptero-inner {
@@ -3394,12 +3388,33 @@ input, select, textarea {
     animation: wobble 1.5s ease-in-out infinite;
 }
 
-@keyframes fly {
-    0%   { transform: translateY(-20vh); }
-    100% { transform: translateY(120vh); }
+.ptero-inner video {
+    width: 100%;
+    display: block;
+    transform: scaleX(-1);
+}
+
+@keyframes fly1 {
+    0%   { top: -20%; }
+    100% { top: 110%; }
+}
+
+@keyframes fly2 {
+    0%   { top: -25%; }
+    100% { top: 115%; }
+}
+
+@keyframes fly3 {
+    0%   { top: -15%; }
+    100% { top: 105%; }
 }
 
 @keyframes wobble {
-    0%, 100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
-    50%     { transform: rotate(90deg) scale(1.6) rotate(4deg); }
+    0%,100% {
+        transform: rotate(90deg) scale(1.6) rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(90deg) scale(1.6) rotate(4deg);
+    }
 }
