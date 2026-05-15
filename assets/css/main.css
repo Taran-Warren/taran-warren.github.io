@@ -3369,18 +3369,21 @@ input, select, textarea {
     border-radius: 8px;
 }
 /* =========================
-   SIDEBAR (STABLE FIX)
+   SIDEBAR FIX (CLEAN)
 ========================= */
+
 .sidebar {
     position: sticky;
     top: 20px;
     height: calc(100vh - 40px);
-    overflow: hidden; /* keeps birds contained safely */
     padding: 10px;
+
+    overflow: visible; /* IMPORTANT: prevents clipping */
+    z-index: 20;       /* ensures it's above main column */
 }
 
-/* prevents HTML5UP grid from breaking sticky */
-.col-4, 
+/* kill HTML5 UP stacking issues */
+.col-4,
 .col-12-narrower {
     overflow: visible !important;
 }
@@ -3388,37 +3391,39 @@ input, select, textarea {
 /* =========================
    NAV LINKS
 ========================= */
+
 .scroll-nav {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     position: relative;
-    z-index: 50; /* keeps links above birds */
+    z-index: 30; /* above birds */
 }
 
 .scroll-nav a {
     display: block;
-    color: white;
+    color: #fff;
     text-decoration: none;
     font-size: 14px;
-    opacity: 1;
-    transition: 0.2s;
+    opacity: 0.85;
 }
 
 .scroll-nav a:hover {
+    opacity: 1;
     transform: translateX(4px);
-    opacity: 0.7;
 }
 
 .scroll-nav a.active {
     font-weight: bold;
-    border-left: 2px solid white;
+    border-left: 2px solid #fff;
     padding-left: 6px;
 }
 
 /* =========================
-   BIRDS (SAFE LAYER)
+   BIRDS (SAFE)
 ========================= */
+
 .sidebar-ptero {
     position: absolute;
     width: 180px;
@@ -3428,8 +3433,6 @@ input, select, textarea {
 
 .ptero-inner {
     display: inline-block;
-    transform: scale(1.6);
-    animation: wobble 1.5s ease-in-out infinite;
     transform-origin: center;
 }
 
@@ -3437,24 +3440,4 @@ input, select, textarea {
     width: 100%;
     display: block;
     transform: scaleX(-1);
-}
-
-/* wobble animation */
-@keyframes wobble {
-    0%, 100% {
-        transform: rotate(-4deg);
-    }
-    50% {
-        transform: rotate(4deg);
-    }
-}
-.sidebar,
-.scroll-nav {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-.sidebar * {
-    opacity: 1 !important;
-    visibility: visible !important;
 }
