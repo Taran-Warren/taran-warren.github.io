@@ -2,35 +2,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar = document.querySelector('.sidebar');
 
-    if (!sidebar) {
-        console.log("Sidebar NOT found");
-        return;
-    }
+    if (!sidebar) return;
+
+    const MAX_BIRDS = 15;
+    let tabActive = true;
+
+    // pause when tab is hidden
+    document.addEventListener("visibilitychange", () => {
+        tabActive = !document.hidden;
+    });
 
     function spawnPtero() {
+
+        // limit total birds
+        if (document.querySelectorAll('.sidebar-ptero').length >= MAX_BIRDS) {
+            return;
+        }
 
         const ptero = document.createElement('div');
         ptero.className = 'sidebar-ptero';
 
-        // random horizontal position
-        const x = Math.random() * 80;
-        ptero.style.left = `${x}%`;
-
-        // random size
-        const scale = 0.7 + Math.random() * 1.2;
-        ptero.style.width = `${120 * scale}px`;
-
-        // start above screen
-        let pos = -200;
-        ptero.style.top = pos + "px";
-
-        // create inner wrapper
         const inner = document.createElement('div');
         inner.className = 'ptero-inner';
 
-        // create video
         const video = document.createElement('video');
-
         video.autoplay = true;
         video.muted = true;
         video.loop = true;
@@ -41,54 +36,73 @@ document.addEventListener("DOMContentLoaded", () => {
         source.type = 'video/webm';
 
         video.appendChild(source);
-
         inner.appendChild(video);
         ptero.appendChild(inner);
 
         sidebar.appendChild(ptero);
 
-        // random speed
-        const speed = 1 + Math.random() * 2;
-
-        // movement state
+        // random spawn properties
         let pos = -200;
-        let xPos = x;
-        let drift = (Math.random() - 0.5) * 1.5;
-        let wobbleOffset = Math.random() * 1000;
-        
+        let xPos = Math.random() * 80;
+
         const speed = 0.8 + Math.random() * 2.5;
-        
+        let drift = (Math.random() - 0.5) * 1.5;
+        const wobbleOffset = Math.random() * 1000;
+
+        ptero.style.width = `${120 * (0.7 + Math.random() * 1.2)}px`;
+        ptero.style.left = `${xPos}%`;
+        ptero.style.top = pos + "px";
+
         const move = setInterval(() => {
-        
+
+            // safety: stop if removed
+            if (!document.body.contains(ptero)) {
+                clearInterval(move);
+                return;
+            }
+
             pos += speed;
-        
-            // slow horizontal drift
+
+            // horizontal drift
             xPos += drift;
-        
-            // occasional random direction change
+
+            // occasional direction change
             if (Math.random() < 0.02) {
                 drift += (Math.random() - 0.5) * 1.5;
             }
-        
-            // sine wave “air wobble”
+
+            // sine wave flight wobble
             const wobble = Math.sin((pos + wobbleOffset) * 0.02) * 2;
-        
+
             ptero.style.top = pos + "px";
             ptero.style.left = (xPos + wobble) + "%";
-        
-            // remove when out of view
+
+            // cleanup
             if (pos > window.innerHeight + 300) {
                 clearInterval(move);
                 ptero.remove();
             }
-        
+
         }, 20);
+
+        // hard safety cleanup (prevents leaks)
+        setTimeout(() => {
+            if (ptero.parentElement) {
+                ptero.remove();
+            }
+        }, 30000);
     }
 
-    // first bird immediately
-    spawnPtero();
+    function spawnLoop() {
+        if (tabActive) {
+            spawnPtero();
+        }
 
-    // continuous spawning
-    setInterval(spawnPtero, 2000);
+        setTimeout(spawnLoop, 2000);
+    }
+
+    // start system
+    spawnPtero();
+    spawnLoop();
 
 });
