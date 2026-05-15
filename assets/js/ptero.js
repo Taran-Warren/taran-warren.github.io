@@ -1,4 +1,4 @@
-<script>
+
 const sidebar = document.querySelector('.sidebar');
 
 function spawnPtero() {
@@ -40,4 +40,4 @@ function spawnPtero() {
 
 // SPAWN LOOP
 setInterval(spawnPtero, 1200);
-</script>
+
