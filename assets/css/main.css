@@ -3373,6 +3373,7 @@ input, select, textarea {
 ========================= */
 
 .sidebar {
+    flex: 1;
     position: relative;
     overflow: hidden;
 }
@@ -3463,4 +3464,19 @@ input, select, textarea {
     position: relative;
     height: 100%;
     overflow: hidden;
+}
+.row.gtr-150 {
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh; /* important */
+}
+.col-4,
+.col-8 {
+    display: flex;
+    flex-direction: column;
+}
+#main,
+.wrapper,
+.container {
+    min-height: 100vh;
 }
