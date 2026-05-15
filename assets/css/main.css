@@ -3369,40 +3369,30 @@ input, select, textarea {
     border-radius: 8px;
 }
 /* =========================
-   SIDEBAR AS CONTAINER
+   SIDEBAR BASE
 ========================= */
 
 .sidebar {
     position: relative;
     overflow: hidden;
-    height: 100%;
 }
 
-/* ensure row defines height */
-.row.gtr-150 {
-    align-items: stretch;
-}
-
-/* =========================
-   CONTENT ABOVE BIRDS
-========================= */
-
-.sidebar section,
-.content {
-    position: relative;
-    z-index: 10;
+/* FULL HEIGHT LAYER (KEY FIX) */
+.ptero-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* =========================
-   BIRDS LAYER
+   BIRDS
 ========================= */
 
 .sidebar-ptero {
     position: absolute;
-    top: 0;
     width: 180px;
-    pointer-events: none;
-    z-index: 1;
 }
 
 /* horizontal spread */
@@ -3427,29 +3417,29 @@ input, select, textarea {
 }
 
 /* =========================
-   FLIGHT (RELATIVE TO PARENT)
+   FULL COLUMN FLIGHT
 ========================= */
 
 @keyframes fly1 {
-    0%   { transform: translateY(-30%); }
-    100% { transform: translateY(130%); }
+    0%   { transform: translateY(-120%); }
+    100% { transform: translateY(120%); }
 }
 
 @keyframes fly2 {
-    0%   { transform: translateY(-50%); }
+    0%   { transform: translateY(-140%); }
     100% { transform: translateY(140%); }
 }
 
 @keyframes fly3 {
-    0%   { transform: translateY(-70%); }
-    100% { transform: translateY(150%); }
+    0%   { transform: translateY(-160%); }
+    100% { transform: translateY(160%); }
 }
 
 /* =========================
-   WOBBLE
+   WOBBLE (SAFE)
 ========================= */
 
 @keyframes wobble {
-    0%,100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
-    50%     { transform: rotate(90deg) scale(1.6) rotate(4deg); }
+    0%, 100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
+    50%      { transform: rotate(90deg) scale(1.6) rotate(4deg); }
 }
