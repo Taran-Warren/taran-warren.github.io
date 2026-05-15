@@ -3443,3 +3443,24 @@ input, select, textarea {
     0%, 100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
     50%      { transform: rotate(90deg) scale(1.6) rotate(4deg); }
 }
+#main {
+    position: relative;
+}
+
+/* force only the layout row to stretch properly */
+.wrapper.style4.container {
+    display: flex;
+    align-items: stretch;
+}
+
+.row.gtr-150 {
+    display: flex;
+    align-items: stretch;
+}
+
+/* sidebar becomes full column height automatically */
+.sidebar {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
