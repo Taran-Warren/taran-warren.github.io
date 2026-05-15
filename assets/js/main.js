@@ -60,3 +60,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1800);
 
 });
+document.addEventListener("DOMContentLoaded", () => {
+
+    const links = document.querySelectorAll(".scroll-nav a");
+    const sections = Array.from(links).map(link =>
+        document.querySelector(link.getAttribute("href"))
+    );
+
+    window.addEventListener("scroll", () => {
+
+        let current = "";
+
+        sections.forEach(section => {
+            if (!section) return;
+
+            const rect = section.getBoundingClientRect();
+
+            if (rect.top <= 150 && rect.bottom >= 150) {
+                current = section.id;
+            }
+        });
+
+        links.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+                link.classList.add("active");
+            }
+        });
+
+    });
+
+});
