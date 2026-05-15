@@ -1,43 +1,51 @@
+document.addEventListener("DOMContentLoaded", () => {
 
-const sidebar = document.querySelector('.sidebar');
+    const sidebar = document.querySelector('.sidebar');
 
-function spawnPtero() {
-    const ptero = document.createElement('div');
-    ptero.className = 'sidebar-ptero';
+    if (!sidebar) {
+        alert("Sidebar NOT found");
+        return;
+    }
 
-    
-    const inner = document.createElement('div');
-    inner.className = 'ptero-inner';
+    alert("Sidebar found");
 
-    const video = document.createElement('video');
-    video.autoplay = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.src = 'images/flying.webm';
+    function spawnPtero() {
 
-    inner.appendChild(video);
-    ptero.appendChild(inner);
-    sidebar.appendChild(ptero);
+        const ptero = document.createElement('div');
+        ptero.className = 'sidebar-ptero';
 
-    // RANDOM X POSITION
-    const x = Math.random() * 90; // 0–90%
-    ptero.style.left = `${x}%`;
+        // TEMP DEBUG STYLE
+        ptero.style.width = "80px";
+        ptero.style.height = "80px";
+        ptero.style.background = "red";
+        ptero.style.position = "absolute";
 
-    // RANDOM SPEED
-    const duration = 10 + Math.random() * 20; // 10–30s
-    ptero.style.animationDuration = `${duration}s`;
+        // RANDOM X
+        const x = Math.random() * 80;
+        ptero.style.left = `${x}%`;
 
-    // RANDOM SIZE
-    const scale = 0.8 + Math.random() * 1.2;
-    ptero.style.width = `${180 * scale}px`;
+        // START POSITION
+        ptero.style.top = "-100px";
 
-    // REMOVE AFTER ANIMATION ENDS
-    setTimeout(() => {
-        ptero.remove();
-    }, duration * 1000);
-}
+        sidebar.appendChild(ptero);
 
-// SPAWN LOOP
-setInterval(spawnPtero, 1200);
+        // SIMPLE FALL
+        let pos = -100;
 
+        const move = setInterval(() => {
+            pos += 2;
+            ptero.style.top = pos + "px";
+
+            if (pos > window.innerHeight) {
+                clearInterval(move);
+                ptero.remove();
+            }
+
+        }, 20);
+    }
+
+    spawnPtero();
+
+    setInterval(spawnPtero, 1200);
+
+});
