@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // TEMP DEBUG STYLE
         ptero.style.width = "80px";
         ptero.style.height = "80px";
-        ptero.style.background = "red";
+        ptero.style.background = "blue";
         ptero.style.position = "absolute";
 
         // RANDOM X
