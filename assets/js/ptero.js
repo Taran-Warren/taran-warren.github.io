@@ -5,6 +5,7 @@ function spawnPtero() {
     const ptero = document.createElement('div');
     ptero.className = 'sidebar-ptero';
 
+    
     const inner = document.createElement('div');
     inner.className = 'ptero-inner';
 
