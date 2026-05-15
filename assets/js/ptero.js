@@ -50,18 +50,38 @@ document.addEventListener("DOMContentLoaded", () => {
         // random speed
         const speed = 1 + Math.random() * 2;
 
-        // movement loop
+        // movement state
+        let pos = -200;
+        let xPos = x;
+        let drift = (Math.random() - 0.5) * 1.5;
+        let wobbleOffset = Math.random() * 1000;
+        
+        const speed = 0.8 + Math.random() * 2.5;
+        
         const move = setInterval(() => {
-
+        
             pos += speed;
-
+        
+            // slow horizontal drift
+            xPos += drift;
+        
+            // occasional random direction change
+            if (Math.random() < 0.02) {
+                drift += (Math.random() - 0.5) * 1.5;
+            }
+        
+            // sine wave “air wobble”
+            const wobble = Math.sin((pos + wobbleOffset) * 0.02) * 2;
+        
             ptero.style.top = pos + "px";
-
+            ptero.style.left = (xPos + wobble) + "%";
+        
+            // remove when out of view
             if (pos > window.innerHeight + 300) {
                 clearInterval(move);
                 ptero.remove();
             }
-
+        
         }, 20);
     }
 
