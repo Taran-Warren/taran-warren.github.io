@@ -3392,7 +3392,10 @@ input, select, textarea {
 
 .sidebar-ptero {
     position: absolute;
+    /* remove top: 0 — the keyframes handle it now */
     width: 180px;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* horizontal spread */
@@ -3417,22 +3420,19 @@ input, select, textarea {
 }
 
 /* =========================
-   FULL COLUMN FLIGHT
+   FLIGHT (RELATIVE TO SIDEBAR HEIGHT)
 ========================= */
-
 @keyframes fly1 {
-    0%   { transform: translateY(-120%); }
-    100% { transform: translateY(120%); }
+    0%   { top: -15%; }
+    100% { top: 105%; }
 }
-
 @keyframes fly2 {
-    0%   { transform: translateY(-140%); }
-    100% { transform: translateY(140%); }
+    0%   { top: -20%; }
+    100% { top: 110%; }
 }
-
 @keyframes fly3 {
-    0%   { transform: translateY(-160%); }
-    100% { transform: translateY(160%); }
+    0%   { top: -25%; }
+    100% { top: 115%; }
 }
 
 /* =========================
