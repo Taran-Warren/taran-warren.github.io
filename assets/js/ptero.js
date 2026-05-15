@@ -12,9 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function spawnPtero() {
 
-        if (document.querySelectorAll('.sidebar-ptero').length >= MAX_BIRDS) {
-            return;
-        }
+        if (document.querySelectorAll('.sidebar-ptero').length >= MAX_BIRDS) return;
 
         const ptero = document.createElement('div');
         ptero.className = 'sidebar-ptero';
@@ -39,13 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebar.appendChild(ptero);
 
         // =========================
-        // INIT VALUES
+        // INIT
         // =========================
         let pos = -200;
-        let xPos = Math.random() * 80;
+        let xPos = 0;
 
         let speed = 0.8 + Math.random() * 2.5;
-        let drift = (Math.random() - 0.5) * 1.5;
+        let drift = (Math.random() - 0.5) * 1.2;
 
         const wobbleOffset = Math.random() * 1000;
         let angle = 0;
@@ -53,14 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const BASE_ANGLE = 90;
 
         const sidebarRect = sidebar.getBoundingClientRect();
-        const birdWidth = 180 * (0.7 + Math.random() * 1.2);
-        
-        const maxX = sidebarRect.width - birdWidth;
-        const x = Math.random() * maxX;
-        
+        const birdWidth = 120 * (0.7 + Math.random() * 1.2);
+
+        // FIXED: pixel-only positioning
+        const maxX = Math.max(0, sidebarRect.width - birdWidth);
+        xPos = Math.random() * maxX;
+
         ptero.style.width = `${birdWidth}px`;
-        ptero.style.left = `${x}px`;
-        ptero.style.top = pos + "px";
+        ptero.style.left = `${xPos}px`;
+        ptero.style.top = `${pos}px`;
 
         // =========================
         // MOVEMENT LOOP
@@ -76,35 +75,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
             pos += speed;
 
+            // drift movement (stable decay)
+            drift *= 0.98;
+
+            // soft steering so they don't escape
+            if (xPos < 20) drift += 0.05;
+            if (xPos > maxX - 20) drift -= 0.05;
+
+            drift += (Math.random() - 0.5) * 0.02;
+
             xPos += drift;
 
-            // decay drift (stability)
-            drift *= 0.995;
+            // clamp inside sidebar
+            xPos = Math.max(0, Math.min(maxX, xPos));
 
-            // soft boundary steering
-            if (xPos < 10) drift += 0.03;
-            if (xPos > 90) drift -= 0.03;
-
-            // gentle pull to center (prevents edge escape)
-            drift += (50 - xPos) * 0.0008;
-
-            // random wind gusts
-            if (Math.random() < 0.02) {
-                drift += (Math.random() - 0.5) * 1.2;
-            }
-
-            // flight wobble
+            // wobble flight path
             const wobble = Math.sin((pos + wobbleOffset) * 0.02) * 2;
 
-            // smooth banking rotation
-            const targetAngle = drift * 10;
+            // banking rotation
+            const targetAngle = drift * 15;
             angle += (targetAngle - angle) * 0.08;
 
-            // APPLY POSITION
-            ptero.style.top = pos + "px";
-            ptero.style.left = (xPos + wobble) + "%";
+            // APPLY POSITION (PIXELS ONLY)
+            ptero.style.top = `${pos}px`;
+            ptero.style.left = `${xPos + wobble}px`;
 
-            // FIXED ORIENTATION
+            // rotate bird
             ptero.style.transform = `rotate(${angle + BASE_ANGLE}deg)`;
 
             // cleanup
