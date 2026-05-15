@@ -1,3 +1,4 @@
+console.log("Ptero JS is running");
 document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar = document.querySelector('.sidebar');
