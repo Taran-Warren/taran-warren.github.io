@@ -3373,8 +3373,8 @@ input, select, textarea {
 ========================= */
 
 .sidebar {
-    flex: 1;
     position: relative;
+    min-height: 100vh;
     overflow: hidden;
 }
 
