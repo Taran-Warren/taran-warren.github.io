@@ -3369,59 +3369,80 @@ input, select, textarea {
     border-radius: 8px;
 }
 /* =========================
-   SIDEBAR BASE
+   SIDEBAR CONTAINER FIX
 ========================= */
 
 .sidebar {
     position: relative;
     overflow: hidden;
-    min-height: 3000px; /* make this larger if needed */
-    padding: 2em;
-    box-sizing: border-box;
+    min-height: 100vh;
 }
-.sidebar section {
+
+/* text always above birds */
+.sidebar section,
+.sidebar .content {
     position: relative;
     z-index: 10;
-    pointer-events: auto;
 }
+
 /* =========================
-   PTERODACTYL BASE
+   BIRDS BASE LAYER
 ========================= */
 
 .sidebar-ptero {
     position: absolute;
+    left: 20px;              /* 👈 forces LEFT SIDE ONLY */
     width: 180px;
     pointer-events: none;
     z-index: 1;
 }
 
-/* multiple instances positions + speeds */
+/* =========================
+   INDIVIDUAL BIRDS
+========================= */
 
 .ptero1 {
-    right: 10%;
     animation: fly1 14s linear infinite;
 }
 
 .ptero2 {
-    right: 40%;
     animation: fly2 10s linear infinite;
 }
 
 .ptero3 {
-    right: 70%;
     animation: fly3 18s linear infinite;
 }
 
 /* =========================
-   VIDEO + ROTATION + WOBBLE
+   FLIGHT PATH (FULL HEIGHT FIX)
+========================= */
+
+@keyframes fly1 {
+    0%   { top: -200px; transform: translateX(0); }
+    100% { top: 120%; transform: translateX(60px); }
+}
+
+@keyframes fly2 {
+    0%   { top: -200px; transform: translateX(0); }
+    100% { top: 120%; transform: translateX(-80px); }
+}
+
+@keyframes fly3 {
+    0%   { top: -200px; transform: translateX(0); }
+    100% { top: 120%; transform: translateX(30px); }
+}
+
+/* =========================
+   INNER ROTATION (FIXED)
 ========================= */
 
 .ptero-inner {
-    display: inline-block;
-    animation: wobble 1.5s ease-in-out infinite;
+    transform: rotate(90deg) scale(1.6);
     transform-origin: center;
+    animation: wobble 1.5s ease-in-out infinite;
 }
 
+/* IMPORTANT: only flip video, not transform container */
 .ptero-inner video {
     width: 100%;
     display: block;
@@ -3429,34 +3450,10 @@ input, select, textarea {
 }
 
 /* =========================
-   FLIGHT PATHS
-========================= */
-
-@keyframes fly1 {
-    from { transform: translateY(-250px) translateX(40px); }
-    to   { transform: translateY(220vh) translateX(80px); }
-}
-
-@keyframes fly2 {
-    from { transform: translateY(-250px) translateX(-60px); }
-    to   { transform: translateY(220vh) translateX(-120px); }
-}
-
-@keyframes fly3 {
-    from { transform: translateY(-250px) translateX(20px); }
-    to   { transform: translateY(220vh) translateX(40px); }
-}
-
-/* =========================
-   WOBBLE (FLAPPING FEEL)
+   WOBBLE (NO CONFLICTS)
 ========================= */
 
 @keyframes wobble {
-    0%, 100% {
-        transform: rotate(90deg) scale(1.8) rotate(-4deg);
-    }
-
-    50% {
-        transform: rotate(90deg) scale(1.8) rotate(4deg);
-    }
-
+    0%, 100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
+    50%      { transform: rotate(90deg) scale(1.6) rotate(4deg); }
+}
