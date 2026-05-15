@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loop() {
         if (tabActive) spawnPtero();
-        setTimeout(loop, 2000);
+        setTimeout(loop, 2500);
     }
 
     spawnPtero();
