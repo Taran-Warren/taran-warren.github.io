@@ -3446,3 +3446,26 @@ input, select, textarea {
     opacity: 1 !important;
     text-shadow: 0 0 2px rgba(0,0,0,0.8);
 }
+.sidebar {
+    position: sticky;
+    top: 20px;
+    z-index: 9999;
+    background: rgba(0,0,0,0.75);
+    padding: 10px;
+}
+
+.scroll-nav {
+    position: relative;
+    z-index: 99999;
+}
+
+.scroll-nav a {
+    display: block !important;
+    color: #fff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-decoration: none !important;
+    font-size: 14px;
+    padding: 6px 0;
+    text-shadow: 0 0 3px #000;
+}
