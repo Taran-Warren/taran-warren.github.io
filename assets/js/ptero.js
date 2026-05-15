@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebar.appendChild(ptero);
 
         // =========================
-        // INITIAL VALUES
+        // INIT VALUES
         // =========================
         let pos = -200;
         let xPos = Math.random() * 80;
@@ -48,8 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let drift = (Math.random() - 0.5) * 1.5;
 
         const wobbleOffset = Math.random() * 1000;
-
         let angle = 0;
+
+        const BASE_ANGLE = 90;
 
         ptero.style.width = `${120 * (0.7 + Math.random() * 1.2)}px`;
         ptero.style.top = pos + "px";
@@ -71,15 +72,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
             xPos += drift;
 
-            // random wind shift
+            // decay drift (stability)
+            drift *= 0.995;
+
+            // soft boundary steering
+            if (xPos < 10) drift += 0.03;
+            if (xPos > 90) drift -= 0.03;
+
+            // gentle pull to center (prevents edge escape)
+            drift += (50 - xPos) * 0.0008;
+
+            // random wind gusts
             if (Math.random() < 0.02) {
                 drift += (Math.random() - 0.5) * 1.2;
             }
 
-            // wobble flight path
+            // flight wobble
             const wobble = Math.sin((pos + wobbleOffset) * 0.02) * 2;
 
-            // banking angle (smooth)
+            // smooth banking rotation
             const targetAngle = drift * 10;
             angle += (targetAngle - angle) * 0.08;
 
@@ -87,8 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ptero.style.top = pos + "px";
             ptero.style.left = (xPos + wobble) + "%";
 
-            // IMPORTANT: rotate INNER (not outer)
-            ptero.style.transform = `rotate(${angle + 90}deg)`;
+            // FIXED ORIENTATION
+            ptero.style.transform = `rotate(${angle + BASE_ANGLE}deg)`;
 
             // cleanup
             if (pos > window.innerHeight + 300) {
