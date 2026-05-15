@@ -3369,16 +3369,16 @@ input, select, textarea {
     border-radius: 8px;
 }
 /* =========================
-   SIDEBAR CONTAINER (CRITICAL FIX)
+   SIDEBAR AS CONTAINER
 ========================= */
 
 .sidebar {
     position: relative;
     overflow: hidden;
-    min-height: 100%; /* IMPORTANT: not vh */
+    height: 100%;
 }
 
-/* ensures parent row defines height properly */
+/* ensure row defines height */
 .row.gtr-150 {
     align-items: stretch;
 }
@@ -3394,32 +3394,29 @@ input, select, textarea {
 }
 
 /* =========================
-   BIRD LAYER
+   BIRDS LAYER
 ========================= */
 
 .sidebar-ptero {
     position: absolute;
     top: 0;
-    left: 0;
     width: 180px;
     pointer-events: none;
     z-index: 1;
-    will-change: transform;
 }
 
-/* spread birds horizontally inside column */
-.ptero1 { left: 10%; animation: fly1 16s linear infinite; }
-.ptero2 { left: 40%; animation: fly2 12s linear infinite; }
-.ptero3 { left: 70%; animation: fly3 20s linear infinite; }
+/* horizontal spread */
+.ptero1 { left: 10%; animation: fly1 14s linear infinite; }
+.ptero2 { left: 45%; animation: fly2 11s linear infinite; }
+.ptero3 { left: 75%; animation: fly3 16s linear infinite; }
 
 /* =========================
-   INNER ROTATION / FLAP
+   INNER ANIMATION
 ========================= */
 
 .ptero-inner {
     display: inline-block;
     transform: rotate(90deg) scale(1.6);
-    transform-origin: center;
     animation: wobble 1.5s ease-in-out infinite;
 }
 
@@ -3430,30 +3427,29 @@ input, select, textarea {
 }
 
 /* =========================
-   BULLETPROOF FLIGHT
-   (RELATIVE TO SIDEBAR HEIGHT)
+   FLIGHT (RELATIVE TO PARENT)
 ========================= */
 
 @keyframes fly1 {
-    0%   { transform: translateY(-20%); }
-    100% { transform: translateY(120%); }
-}
-
-@keyframes fly2 {
-    0%   { transform: translateY(-40%); }
+    0%   { transform: translateY(-30%); }
     100% { transform: translateY(130%); }
 }
 
-@keyframes fly3 {
-    0%   { transform: translateY(-60%); }
+@keyframes fly2 {
+    0%   { transform: translateY(-50%); }
     100% { transform: translateY(140%); }
 }
 
+@keyframes fly3 {
+    0%   { transform: translateY(-70%); }
+    100% { transform: translateY(150%); }
+}
+
 /* =========================
-   WOBBLE (SAFE: no transform conflict with fly)
+   WOBBLE
 ========================= */
 
 @keyframes wobble {
-    0%, 100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
-    50%      { transform: rotate(90deg) scale(1.6) rotate(4deg); }
+    0%,100% { transform: rotate(90deg) scale(1.6) rotate(-4deg); }
+    50%     { transform: rotate(90deg) scale(1.6) rotate(4deg); }
 }
