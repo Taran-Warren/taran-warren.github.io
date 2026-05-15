@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ptero.style.left = (xPos + wobble) + "%";
 
             // IMPORTANT: rotate INNER (not outer)
-            ptero.style.transform = `rotate(${angle}deg)`;
+            ptero.style.transform = `rotate(${angle + 90}deg)`;
 
             // cleanup
             if (pos > window.innerHeight + 300) {
