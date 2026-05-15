@@ -3402,9 +3402,9 @@ input, select, textarea {
 
 }
 
-.ptero1 { --x: 10%; animation: fly1 22s linear infinite; }
-.ptero2 { --x: 45%; animation: fly2 18s linear infinite; }
-.ptero3 { --x: 75%; animation: fly3 26s linear infinite; }
+.ptero1 { --x: 10%; animation: fly1 30s linear infinite; }
+.ptero2 { --x: 45%; animation: fly2 26s linear infinite; }
+.ptero3 { --x: 75%; animation: fly3 34s linear infinite; }
 
 /* =========================
    INNER ANIMATION
