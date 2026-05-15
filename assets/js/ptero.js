@@ -52,9 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const BASE_ANGLE = 90;
 
-        ptero.style.width = `${120 * (0.7 + Math.random() * 1.2)}px`;
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const birdWidth = 180 * (0.7 + Math.random() * 1.2);
+        
+        const maxX = sidebarRect.width - birdWidth;
+        const x = Math.random() * maxX;
+        
+        ptero.style.width = `${birdWidth}px`;
+        ptero.style.left = `${x}px`;
         ptero.style.top = pos + "px";
-        ptero.style.left = xPos + "%";
 
         // =========================
         // MOVEMENT LOOP
