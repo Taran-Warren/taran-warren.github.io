@@ -1,0 +1,42 @@
+<script>
+const sidebar = document.querySelector('.sidebar');
+
+function spawnPtero() {
+    const ptero = document.createElement('div');
+    ptero.className = 'sidebar-ptero';
+
+    const inner = document.createElement('div');
+    inner.className = 'ptero-inner';
+
+    const video = document.createElement('video');
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.src = 'images/flying.webm';
+
+    inner.appendChild(video);
+    ptero.appendChild(inner);
+    sidebar.appendChild(ptero);
+
+    // RANDOM X POSITION
+    const x = Math.random() * 90; // 0–90%
+    ptero.style.left = `${x}%`;
+
+    // RANDOM SPEED
+    const duration = 10 + Math.random() * 20; // 10–30s
+    ptero.style.animationDuration = `${duration}s`;
+
+    // RANDOM SIZE
+    const scale = 0.8 + Math.random() * 1.2;
+    ptero.style.width = `${180 * scale}px`;
+
+    // REMOVE AFTER ANIMATION ENDS
+    setTimeout(() => {
+        ptero.remove();
+    }, duration * 1000);
+}
+
+// SPAWN LOOP
+setInterval(spawnPtero, 1200);
+</script>
