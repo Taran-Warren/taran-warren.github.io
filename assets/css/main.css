@@ -3373,15 +3373,11 @@ input, select, textarea {
 ========================= */
 
 .sidebar {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
+    position: relative;
     overflow: hidden;
-    pointer-events: none;
+    min-height: 3000px; /* make this larger if needed */
+    padding: 2em;
+    box-sizing: border-box;
 }
 .sidebar section {
     position: relative;
@@ -3463,7 +3459,4 @@ input, select, textarea {
     50% {
         transform: rotate(90deg) scale(1.8) rotate(4deg);
     }
-}
-.row.gtr-150 {
-    position: relative;
-}
+
