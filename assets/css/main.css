@@ -3384,7 +3384,7 @@ input, select, textarea {
 
 .ptero-inner {
     display: inline-block;
-    transform: rotate(90deg) scale(1.6);
+    transform: scale(1.6);
     animation: wobble 1.5s ease-in-out infinite;
 }
 
