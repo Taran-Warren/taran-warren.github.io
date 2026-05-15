@@ -3386,6 +3386,7 @@ input, select, textarea {
     display: inline-block;
     transform: scale(1.6);
     animation: wobble 1.5s ease-in-out infinite;
+    transform-origin: center;
 }
 
 .ptero-inner video {
@@ -3408,7 +3409,6 @@ input, select, textarea {
     0%   { top: -15%; }
     100% { top: 105%; }
 }
-
 @keyframes wobble {
     0%, 100% {
         transform: rotate(-4deg);
