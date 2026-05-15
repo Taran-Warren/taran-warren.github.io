@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
 
-    const MAX_BIRDS = 15;
+    const MAX_BIRDS = 20;
     let tabActive = true;
 
     document.addEventListener("visibilitychange", () => {
