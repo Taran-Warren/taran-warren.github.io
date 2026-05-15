@@ -3397,13 +3397,14 @@ input, select, textarea {
     width: 180px;
     pointer-events: none;
     z-index: 1;
-	left: clamp(0px, var(--x, 50%), calc(100% - 180px));
+	left: var(--x);
+
+
 }
 
-/* horizontal spread */
-.ptero1 { left: calc(10% - 90px); animation: fly1 22s linear infinite; }
-.ptero2 { left: calc(45% - 90px); animation: fly2 18s linear infinite; }
-.ptero3 { left: calc(75% - 90px); animation: fly3 26s linear infinite; }
+.ptero1 { --x: 10%; animation: fly1 22s linear infinite; }
+.ptero2 { --x: 45%; animation: fly2 18s linear infinite; }
+.ptero3 { --x: 75%; animation: fly3 26s linear infinite; }
 
 /* =========================
    INNER ANIMATION
