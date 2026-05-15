@@ -3373,7 +3373,6 @@ input, select, textarea {
     top: 0;
     height: 100vh;
     overflow: hidden;
-    z-index: 10;
 }
 
 .sidebar-ptero {
@@ -3382,7 +3381,6 @@ input, select, textarea {
     pointer-events: none;
     z-index: 1;
 }
-
 
 .ptero-inner {
     display: inline-block;
@@ -3421,16 +3419,20 @@ input, select, textarea {
     }
 }
 .scroll-nav {
+    position: sticky;
+    top: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 20px;
+    padding: 10px;
+    z-index: 10;
 }
 
 .scroll-nav a {
     color: white;
     text-decoration: none;
-    opacity: 0.6;
+    font-size: 14px;
+    opacity: 0.5;
     transition: 0.2s;
 }
 
