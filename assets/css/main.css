@@ -3397,12 +3397,13 @@ input, select, textarea {
     width: 180px;
     pointer-events: none;
     z-index: 1;
+	left: clamp(0px, var(--x, 50%), calc(100% - 180px));
 }
 
 /* horizontal spread */
 .ptero1 { left: 10%; animation: fly1 22s linear infinite; }
-.ptero2 { left: 45%; animation: fly2 18s linear infinite; }
-.ptero3 { left: 75%; animation: fly3 26s linear infinite; }
+.ptero2 { left: 35%; animation: fly2 18s linear infinite; }
+.ptero3 { left: 55%; animation: fly3 26s linear infinite; }
 
 /* =========================
    INNER ANIMATION
