@@ -3368,13 +3368,57 @@ input, select, textarea {
     display: block;
     border-radius: 8px;
 }
+/* =========================
+   SIDEBAR (STABLE FIX)
+========================= */
 .sidebar {
     position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
+    top: 20px;
+    height: calc(100vh - 40px);
+    overflow: hidden; /* keeps birds contained safely */
+    padding: 10px;
 }
 
+/* prevents HTML5UP grid from breaking sticky */
+.col-4, 
+.col-12-narrower {
+    overflow: visible !important;
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.scroll-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 50; /* keeps links above birds */
+}
+
+.scroll-nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 1;
+    transition: 0.2s;
+}
+
+.scroll-nav a:hover {
+    transform: translateX(4px);
+    opacity: 0.7;
+}
+
+.scroll-nav a.active {
+    font-weight: bold;
+    border-left: 2px solid white;
+    padding-left: 6px;
+}
+
+/* =========================
+   BIRDS (SAFE LAYER)
+========================= */
 .sidebar-ptero {
     position: absolute;
     width: 180px;
@@ -3395,55 +3439,12 @@ input, select, textarea {
     transform: scaleX(-1);
 }
 
-@keyframes fly1 {
-    0%   { top: -20%; }
-    100% { top: 110%; }
-}
-
-@keyframes fly2 {
-    0%   { top: -25%; }
-    100% { top: 115%; }
-}
-
-@keyframes fly3 {
-    0%   { top: -15%; }
-    100% { top: 105%; }
-}
+/* wobble animation */
 @keyframes wobble {
     0%, 100% {
         transform: rotate(-4deg);
     }
-
     50% {
         transform: rotate(4deg);
     }
-}
-.scroll-nav {
-    position: sticky;
-    top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    z-index: 10;
-}
-
-.scroll-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    opacity: 0.5;
-    transition: 0.2s;
-}
-
-.scroll-nav a:hover {
-    opacity: 1;
-    transform: translateX(4px);
-}
-
-.scroll-nav a.active {
-    opacity: 1;
-    font-weight: bold;
-    border-left: 2px solid white;
-    padding-left: 6px;
 }
