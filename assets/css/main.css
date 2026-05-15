@@ -3418,3 +3418,32 @@ input, select, textarea {
         transform: rotate(4deg);
     }
 }
+.scroll-nav {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    z-index: 10;
+}
+
+.scroll-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.scroll-nav a:hover {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+.scroll-nav a.active {
+    opacity: 1;
+    font-weight: bold;
+    border-left: 2px solid white;
+    padding-left: 6px;
+}
