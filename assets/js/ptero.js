@@ -1,51 +1,55 @@
-document.addEventListener("DOMContentLoaded", () => {
+function spawnPtero() {
 
-    const sidebar = document.querySelector('.sidebar');
+    const ptero = document.createElement('div');
+    ptero.className = 'sidebar-ptero';
 
-    if (!sidebar) {
-        alert("Sidebar NOT found");
-        return;
-    }
+    const inner = document.createElement('div');
+    inner.className = 'ptero-inner';
 
-    alert("Sidebar found");
+    const video = document.createElement('video');
 
-    function spawnPtero() {
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
 
-        const ptero = document.createElement('div');
-        ptero.className = 'sidebar-ptero';
+    video.src = 'images/flying.webm';
 
-        // TEMP DEBUG STYLE
-        ptero.style.width = "80px";
-        ptero.style.height = "80px";
-        ptero.style.background = "blue";
-        ptero.style.position = "absolute";
+    inner.appendChild(video);
+    ptero.appendChild(inner);
 
-        // RANDOM X
-        const x = Math.random() * 80;
-        ptero.style.left = `${x}%`;
+    // RANDOM SIZE
+    const scale = 0.7 + Math.random() * 1.2;
+    ptero.style.width = `${120 * scale}px`;
 
-        // START POSITION
-        ptero.style.top = "-100px";
+    ptero.style.position = "absolute";
 
-        sidebar.appendChild(ptero);
+    // RANDOM X
+    const x = Math.random() * 80;
+    ptero.style.left = `${x}%`;
 
-        // SIMPLE FALL
-        let pos = -100;
+    // START POSITION
+    ptero.style.top = "-200px";
 
-        const move = setInterval(() => {
-            pos += 2;
-            ptero.style.top = pos + "px";
+    sidebar.appendChild(ptero);
 
-            if (pos > window.innerHeight) {
-                clearInterval(move);
-                ptero.remove();
-            }
+    // SIMPLE FALL
+    let pos = -200;
 
-        }, 20);
-    }
+    const speed = 1 + Math.random() * 3;
 
-    spawnPtero();
+    const move = setInterval(() => {
 
-    setInterval(spawnPtero, 1200);
+        pos += speed;
 
-});
+        ptero.style.top = pos + "px";
+
+        if (pos > window.innerHeight + 300) {
+
+            clearInterval(move);
+            ptero.remove();
+
+        }
+
+    }, 20);
+}
