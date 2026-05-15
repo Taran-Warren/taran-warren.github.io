@@ -3372,7 +3372,11 @@ input, select, textarea {
     position: sticky;
     top: 0;
     height: 100vh;
-    overflow: hidden;
+
+    overflow-y: auto;   /* allow scroll inside */
+    overflow-x: hidden; /* still prevents bird spill */
+
+    z-index: 10;
 }
 
 .sidebar-ptero {
