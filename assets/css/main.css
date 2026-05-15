@@ -3448,3 +3448,13 @@ input, select, textarea {
         transform: rotate(4deg);
     }
 }
+.sidebar,
+.scroll-nav {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+.sidebar * {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
