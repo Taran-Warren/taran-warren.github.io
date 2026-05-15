@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sidebar.appendChild(ptero);
 
         // =========================
-        // INITIAL STATE
+        // INITIAL VALUES
         // =========================
         let pos = -200;
         let xPos = Math.random() * 80;
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ptero.style.left = xPos + "%";
 
         // =========================
-        // FLIGHT LOOP
+        // MOVEMENT LOOP
         // =========================
         const move = setInterval(() => {
 
@@ -65,29 +65,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // pause when tab inactive
             if (!tabActive) return;
 
             pos += speed;
 
-            // horizontal drift
             xPos += drift;
 
-            // occasional wind shift
+            // random wind shift
             if (Math.random() < 0.02) {
                 drift += (Math.random() - 0.5) * 1.2;
             }
 
-            // sine wave flight wobble
+            // wobble flight path
             const wobble = Math.sin((pos + wobbleOffset) * 0.02) * 2;
 
-            // banking rotation based on movement direction
+            // banking angle (smooth)
             const targetAngle = drift * 10;
-            angle += (targetAngle - angle) * 0.08; // smooth easing
+            angle += (targetAngle - angle) * 0.08;
 
+            // APPLY POSITION
             ptero.style.top = pos + "px";
             ptero.style.left = (xPos + wobble) + "%";
-            ptero.style.transform = `rotate(${angle}deg)`;
+
+            // IMPORTANT: rotate INNER (not outer)
+            inner.style.transform = `scale(1.6) rotate(${angle}deg)`;
 
             // cleanup
             if (pos > window.innerHeight + 300) {
@@ -106,9 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loop() {
-        if (tabActive) {
-            spawnPtero();
-        }
+        if (tabActive) spawnPtero();
         setTimeout(loop, 2000);
     }
 
