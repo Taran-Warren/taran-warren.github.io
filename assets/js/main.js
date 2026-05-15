@@ -35,7 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // RANDOM SPEED
         const duration = 15 + Math.random() * 20;
-
+        
+        // START ABOVE SCREEN
+        ptero.style.top = "-200px";
+        
         // RANDOM ANIMATION
         const anims = ['fly1', 'fly2', 'fly3'];
         const anim = anims[Math.floor(Math.random() * anims.length)];
