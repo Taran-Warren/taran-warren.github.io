@@ -52,9 +52,23 @@
 							<div class="col-4 col-12-narrower">
 							
 							    <!-- Sidebar -->
-							    <div class="sidebar">
-							
-							        
+								<div class="sidebar">
+								
+								    <div class="scroll-nav">
+								        <a href="#overview">Overview</a>
+								        <a href="#concept">Concept</a>
+								        <a href="#management">Management</a>
+								        <a href="#virtual">Virtual</a>
+								        <a href="#design">Design</a>
+								        <a href="#internal">Internal</a>
+								        <a href="#transition">Transition</a>
+								        <a href="#technologies">Tech</a>
+								        <a href="#costs">Costs</a>
+								        <a href="#test">Test Plan</a>
+								        <a href="#reflection">Reflection</a>
+								        <a href="#references">References</a>
+								    </div>
+								
 								</div>
 
 
@@ -65,7 +79,7 @@
 										<div class="content">
 											<section>
 											<header>
-							                	<h3>An overview</h3>
+							                	<h3 id ="overview">An overview</h3>
 											</header>
 											<p>This section describes the design and development process of an animatronic pterodactyl prototype. With the requirement of one articulating part in this case the wings flapping. This project was developed as part of a structured product development pipeline going from 2D designs to a virtual model and finally a physical manufactured model.</p>
 							            	<p>The focus of the project was not purely aesthetic but exploring a number of development techniques. The mechanical idea was inspired by ligaments for the actuation of the wings and a lightweight 3D printed structure (Beitz et al., 2007). </p>
@@ -76,7 +90,7 @@
 											</div>
 												<header>
 													<br>
-													<h3>The Concept</h3>
+													<h3 id = "concept">The Concept</h3>
 												</header>
 												<p>The initial design brief required an artifact with an articulating mechanism. After an initial idea discussion, a pterodactyl was chosen as the inspiration of the project with its wings being the articulating mechanism. </p>
 												<p>Initially a more complex pterodactyl model was proposed and explored this would have had much more movement. Having a state where the pterodactyl walks on its wings and another where the wings would lock and be able to flap. This was deemed as too ambitious for the constraints of the project. Although initial designs and mechanisms were designed as seen below.</p>
@@ -95,13 +109,13 @@
 											</section>
 											<header>
 													<br>
-													<h3>Project Management</h3>
+													<h3 id = "management">Project Management</h3>
 											</header>
 											<p>A Gantt chart was used to structure the develeopment process and ensure deadlines where met. It is broken down into 5 stages concept, design, model development, preproduction and production. This helpeed keep all aspects of the project on track and allowed all parts to come together seamlessly seen below</p>
 											<img src="images/gantChart.png" style="width:100%; max-width:500px;">
 											<header>
 													<br>
-													<h3>Virtual Prototyping</h3>
+													<h3 id = "virtual">Virtual Prototyping</h3>
 											</header>
 											<p>Blender was chosen as the development tool for the project due to its combined strength for both organic sculpting and mechanical modelling workflows. Along with the available skillset within the group. This allowed for both the rigid structural components (joints and supports) and the more organic sections (head, body and legs) to be created in one application.</p>
 
@@ -130,7 +144,7 @@
 											<p>The decision to use print-in-place joint was critical in reducing assembly complexity. This is crucial if the prototype was taken into full production. As traditional pinned joints would require post-print assembly adding an extra step to the production pipeline and possible increasing failure points. By integrating the pivot directly into the print structural integrity and mechanical reliability is improved.</p>
 											<header>
 													<br>
-													<h3>Design decisions of the body and internal structure</h3>
+													<h3 id = "internal">Design decisions of the body and internal structure</h3>
 											</header>
 											<p>The internal structure of the model was designed to be both functional and manufacturable.</p>
 											<P>Key design features include:</P>
@@ -141,7 +155,7 @@
 											<p>The head and legs serve no functional use and are purely decorative so were designed as static structural elements. This allowed all focus to be on the mechanical system design without adding additional complexity.</p>
 											<header>
 													<br>
-													<h3>Transition to a physical prototype</h3>
+													<h3 id = "transition">Transition to a physical prototype</h3>
 											</header>
 											<p>3D printing took the project from simulations and theory to a realised product. PETG was used as the print substance this was due to its relative ease to print with as opposed to others (ABS), its better impact and shatter resistance than PLA, strong temperature resistance and layer adhesion. Additionally, its strong chemical and UV resistance although useful were not deciding factors as the final product will be enclosed in a skin (Gibson et al., 2021; Bogue, 2013)</p>
 											<p>The initial prototype validated the choice for print in place joints, significantly reducing the assembly requirements. The structural rigidity was sufficient, and the weight remained low allowing for future motors to be cheaper and take less wear.</p>
@@ -151,7 +165,7 @@
 											<img src="images/finished.png" style="width:100%; max-width:500px;">
 											<header>
 													<br>
-													<h3>Technologies</h3>
+													<h3 id = "technologies">Technologies</h3>
 											</header>
 											<p>Several technologies where available for this project however not all were appropriate for this use case.</p>
 											<p>3D scanning was not used as we did not have access to a life like pterodactyl additionally it would not be useable for the mechanical wings. This would have required a physical prototype to 3d scan effectively making it redundant. While valuable in reverse engineering, its benefits are limited in biometric prototyping where the design is still experimental and not know.</p>
@@ -164,19 +178,19 @@
 											<p>Composite works were considered by due to lack of availability difficulties with the budget and limited time frame were unfortunately not suitable. In the future a silicon skin over the body, head and legs would be added and a spandex stretchy material would be used as the wings. This would have greatly enhanced the project.</p>
 											<header>
 													<br>
-													<h3>Costs</h3>
+													<h3 id = "costs">Costs</h3>
 											</header>
 											<p>Shown below is the cost breakdown of the prototype.</p>
 											<img src="images/Cost.png" style="width:100%; max-width:500px;">
 											<header>
 													<br>
-													<h3>Test plan</h3>
+													<h3 id = "test">Test plan</h3>
 											</header>
 											<p>Shown below is the test plan used to evalute the many aspects of the project. All conducted tests were passed by the final model</p>
 											<img src="images/testPlan.png" style="width:100%; max-width:500px;">
 											<header>
 													<br>
-													<h3>Reflection and future improvements</h3>
+													<h3 id ="reflection">Reflection and future improvements</h3>
 											</header>
 											<p> Through the iterative development process several improvements were identified. A significant limitation was the tolerance of the 3d printers when it came to small moving components such as the internal rollers. Although remedied by sperate printing a proper print in place solution would further reduce the assembly time.</p>
 											<p>Blender although highly effective during the development is not specifically made for precision mechanics. As such transitioning to CAD software for the final production mechanical parts would benefit consistency of the model. A hybrid workflow making use of CAD software for precision and keeping blender for sculpting would likely prove superior.</p>
@@ -188,7 +202,7 @@
 											<p>Overall, the project successfully demonstrated the full design production process from virtual processing, iterative design and additive manufacturing. </p>
 											<header>
 													<br>
-													<h3>References </h3>
+													<h3 id = "references">References </h3>
 											</header>
 											<p>Beitz, W., Pahl, G. and Grote, K., 1996. Engineering design: a systematic approach. Mrs Bulletin, 71(30), p.3. </p>
 											<p>Bogue, R., 2013. 3D printing: the dawn of a new era in manufacturing?. Assembly automation, 33(4), pp.307-311. </p>
