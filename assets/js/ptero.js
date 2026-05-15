@@ -1,55 +1,74 @@
-function spawnPtero() {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const ptero = document.createElement('div');
-    ptero.className = 'sidebar-ptero';
+    const sidebar = document.querySelector('.sidebar');
 
-    const inner = document.createElement('div');
-    inner.className = 'ptero-inner';
+    if (!sidebar) {
+        console.log("Sidebar NOT found");
+        return;
+    }
 
-    const video = document.createElement('video');
+    function spawnPtero() {
 
-    video.autoplay = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
+        const ptero = document.createElement('div');
+        ptero.className = 'sidebar-ptero';
 
-    video.src = 'images/flying.webm';
+        // random horizontal position
+        const x = Math.random() * 80;
+        ptero.style.left = `${x}%`;
 
-    inner.appendChild(video);
-    ptero.appendChild(inner);
+        // random size
+        const scale = 0.7 + Math.random() * 1.2;
+        ptero.style.width = `${120 * scale}px`;
 
-    // RANDOM SIZE
-    const scale = 0.7 + Math.random() * 1.2;
-    ptero.style.width = `${120 * scale}px`;
-
-    ptero.style.position = "absolute";
-
-    // RANDOM X
-    const x = Math.random() * 80;
-    ptero.style.left = `${x}%`;
-
-    // START POSITION
-    ptero.style.top = "-200px";
-
-    sidebar.appendChild(ptero);
-
-    // SIMPLE FALL
-    let pos = -200;
-
-    const speed = 1 + Math.random() * 3;
-
-    const move = setInterval(() => {
-
-        pos += speed;
-
+        // start above screen
+        let pos = -200;
         ptero.style.top = pos + "px";
 
-        if (pos > window.innerHeight + 300) {
+        // create inner wrapper
+        const inner = document.createElement('div');
+        inner.className = 'ptero-inner';
 
-            clearInterval(move);
-            ptero.remove();
+        // create video
+        const video = document.createElement('video');
 
-        }
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
 
-    }, 20);
-}
+        const source = document.createElement('source');
+        source.src = 'images/flying.webm';
+        source.type = 'video/webm';
+
+        video.appendChild(source);
+
+        inner.appendChild(video);
+        ptero.appendChild(inner);
+
+        sidebar.appendChild(ptero);
+
+        // random speed
+        const speed = 1 + Math.random() * 2;
+
+        // movement loop
+        const move = setInterval(() => {
+
+            pos += speed;
+
+            ptero.style.top = pos + "px";
+
+            if (pos > window.innerHeight + 300) {
+                clearInterval(move);
+                ptero.remove();
+            }
+
+        }, 20);
+    }
+
+    // first bird immediately
+    spawnPtero();
+
+    // continuous spawning
+    setInterval(spawnPtero, 2000);
+
+});
