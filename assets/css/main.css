@@ -3369,7 +3369,7 @@ input, select, textarea {
     border-radius: 8px;
 }
 /* =========================
-   SIDEBAR FIX (CLEAN)
+   SIDEBAR (SAFE + STABLE)
 ========================= */
 
 .sidebar {
@@ -3378,18 +3378,20 @@ input, select, textarea {
     height: calc(100vh - 40px);
     padding: 10px;
 
-    overflow: visible; /* IMPORTANT: prevents clipping */
-    z-index: 20;       /* ensures it's above main column */
+    background: rgba(0, 0, 0, 0.55); /* makes links visible */
+    z-index: 1000;
+
+    overflow: hidden; /* keeps birds inside */
 }
 
-/* kill HTML5 UP stacking issues */
+/* prevents HTML5 UP layout breaking sticky */
 .col-4,
 .col-12-narrower {
     overflow: visible !important;
 }
 
 /* =========================
-   NAV LINKS
+   NAV LINKS (VISIBLE FIX)
 ========================= */
 
 .scroll-nav {
@@ -3398,37 +3400,42 @@ input, select, textarea {
     gap: 10px;
 
     position: relative;
-    z-index: 30; /* above birds */
+    z-index: 10;
 }
 
 .scroll-nav a {
     display: block;
-    color: #fff;
+    color: #ffffff !important;
     text-decoration: none;
     font-size: 14px;
-    opacity: 0.85;
+
+    opacity: 1 !important;   /* kills HTML5 UP fade */
+    visibility: visible !important;
+
+    padding: 4px 0;
 }
 
 .scroll-nav a:hover {
-    opacity: 1;
     transform: translateX(4px);
+    opacity: 0.8;
 }
 
 .scroll-nav a.active {
     font-weight: bold;
-    border-left: 2px solid #fff;
+    border-left: 2px solid white;
     padding-left: 6px;
 }
 
 /* =========================
-   BIRDS (SAFE)
+   BIRDS (DO NOT BREAK)
 ========================= */
 
 .sidebar-ptero {
     position: absolute;
     width: 180px;
     pointer-events: none;
-    z-index: 1;
+
+    z-index: 1; /* ALWAYS behind links */
 }
 
 .ptero-inner {
@@ -3440,32 +3447,4 @@ input, select, textarea {
     width: 100%;
     display: block;
     transform: scaleX(-1);
-}
-.scroll-nav a {
-    color: #ffffff !important;
-    opacity: 1 !important;
-    text-shadow: 0 0 2px rgba(0,0,0,0.8);
-}
-.sidebar {
-    position: sticky;
-    top: 20px;
-    z-index: 9999;
-    background: rgba(0,0,0,0.75);
-    padding: 10px;
-}
-
-.scroll-nav {
-    position: relative;
-    z-index: 99999;
-}
-
-.scroll-nav a {
-    display: block !important;
-    color: #fff !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    text-decoration: none !important;
-    font-size: 14px;
-    padding: 6px 0;
-    text-shadow: 0 0 3px #000;
 }
