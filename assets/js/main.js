@@ -1,10 +1,56 @@
-window.__siteBuild = 3;
+window.__siteBuild = 4;
 
 // Remove the preload class once loaded so the template's animations/transitions
 // can run (body.is-preload disables all of them with !important).
 window.addEventListener("load", () => {
     document.body.classList.remove("is-preload");
 });
+
+// Mobile navigation.
+// Below the template's breakpoint the desktop #header nav is hidden by CSS and a
+// slide-out panel is meant to take over. The styles for it were always here, but
+// the code that builds #navButton/#navPanel lives in the template's original
+// main.js and was lost — leaving phones with no navigation at all. Restore it.
+(function ($) {
+
+    if (typeof $ === 'undefined' || !$.fn || !$.fn.panel || !$.fn.navList) return;
+
+    $(function () {
+
+        var $body = $('body'),
+            $nav = $('#nav');
+
+        if (!$nav.length || $('#navPanel').length) return;
+
+        $(
+            '<div id="navButton">' +
+                '<a href="#navPanel" class="toggle"></a>' +
+            '</div>'
+        )
+            .appendTo($body);
+
+        $(
+            '<div id="navPanel">' +
+                '<nav>' +
+                    $nav.navList() +
+                '</nav>' +
+            '</div>'
+        )
+            .appendTo($body)
+            .panel({
+                delay: 500,
+                hideOnClick: true,
+                hideOnSwipe: true,
+                resetScroll: true,
+                resetForms: true,
+                side: 'left',
+                target: $body,
+                visibleClass: 'navPanel-visible'
+            });
+
+    });
+
+})(window.jQuery);
 
 document.addEventListener("DOMContentLoaded", () => {
 
