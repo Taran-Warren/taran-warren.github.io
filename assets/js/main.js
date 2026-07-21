@@ -1,3 +1,5 @@
+window.__siteBuild = 3;
+
 // Remove the preload class once loaded so the template's animations/transitions
 // can run (body.is-preload disables all of them with !important).
 window.addEventListener("load", () => {
@@ -11,7 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Flying pterodactyls are exclusive to the Pterodactyl project page.
     if (!sidebar || !document.body.classList.contains('ptero-page')) return;
 
+    // Each bird is its own <video> fetching the same clip. Spawning them
+    // unbounded saturates the browser's connection pool, so none of them ever
+    // buffer — and it starves the main project video too. Cap the flock.
+    const MAX_BIRDS = 5;
+
     function spawnPtero() {
+
+        if (sidebar.querySelectorAll('.sidebar-ptero').length >= MAX_BIRDS) return;
 
         const ptero = document.createElement('div');
         ptero.className = 'sidebar-ptero';
@@ -66,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // continuous spawning
     setInterval(() => {
         spawnPtero();
-    }, 1800);
+    }, 3000);
 
 });
 document.addEventListener("DOMContentLoaded", () => {
@@ -102,19 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(link.getAttribute("href"))
     );
 
-    window.addEventListener("scroll", () => {
+    // The targets are headings (only ~30px tall), so testing whether one straddles
+    // a fixed line almost never matches. Instead: highlight the last heading that
+    // has scrolled above the threshold.
+    const markActive = () => {
 
+        const threshold = 160;
         let current = "";
 
         sections.forEach(section => {
             if (!section) return;
-
-            const rect = section.getBoundingClientRect();
-
-            if (rect.top <= 150 && rect.bottom >= 150) {
+            if (section.getBoundingClientRect().top <= threshold) {
                 current = section.id;
             }
         });
+
+        // Before the first heading, keep the first entry highlighted.
+        if (!current) {
+            const first = sections.find(Boolean);
+            if (first) current = first.id;
+        }
 
         links.forEach(link => {
             link.classList.remove("active");
@@ -123,6 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-    });
+    };
+
+    window.addEventListener("scroll", markActive, { passive: true });
+
+    // Anchor jumps don't always emit a scroll event, so update on hash change too.
+    window.addEventListener("hashchange", () => setTimeout(markActive, 50));
+    links.forEach(link => link.addEventListener("click", () => setTimeout(markActive, 50)));
+
+    markActive();
 
 });
