@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>YouTube Auto-Pipeline - Towards Terra</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="left-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">TaranWarren <span>Portfolio</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html">Welcome</a></li>
+							<li class="submenu current">
+								<a href="#">Projects</a>
+								<ul>
+									<li><a href="left-sidebar.html">Pterodactyl</a></li>
+									<li class="current"><a href="youtube-pipeline.html">YouTube Auto-Pipeline</a></li>
+									<li><a href="dissertation.html">Dissertation</a></li>
+									<li><a href="contact.html">Contact</a></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon solid fa-rocket"></span>
+						<h2>Building a Fully Automated <strong>Sci-Fi YouTube Channel</strong></h2>
+						<p>An end-to-end pipeline that writes, illustrates, narrates, assembles and uploads cinematic sci-fi stories &mdash; with almost no manual input.</p>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style4 container">
+
+							<div class="row gtr-150">
+							<div class="col-4 col-12-narrower">
+
+							    <!-- Sidebar -->
+								<div class="sidebar">
+
+								    <div class="scroll-nav">
+										<br><br><br>
+								        <a href="#overview">Overview</a>
+
+								        <a href="#architecture">Architecture</a>
+
+								        <a href="#writing">Story Writing</a>
+
+								        <a href="#visuals">Visual Generation</a>
+
+								        <a href="#voice">Narration</a>
+
+								        <a href="#assembly">Assembly &amp; Upload</a>
+
+								        <a href="#iteration">Debugging in Public</a>
+
+								        <a href="#stack">Tech Stack</a>
+
+								        <a href="#reflection">Reflection</a>
+								    </div>
+
+								</div>
+
+
+								</div>
+								<div class="col-8 col-12-narrower imp-narrower">
+
+									<!-- Content -->
+										<div class="content">
+											<section>
+											<header>
+							                	<h3 id="overview">Overview</h3>
+											</header>
+											<p><strong>TOWARDS TERRA</strong> is a YouTube channel of cinematic, HFY-style ("Humanity, F*** Yeah") sci-fi stories &mdash; grand fleet battles, last stands, rescues, sieges &mdash; that runs almost entirely on its own. A scheduled pipeline picks or writes a story, generates its artwork, narrates it, assembles the video, and uploads it, on a daily cadence, without me touching it.</p>
+											<img src="images/scifystory-hero.png" style="width:100%; max-width:640px; display:block; margin:1em auto;">
+											<p style="text-align:center;"><em>A hero shot from the current house visual style &mdash; the result of about seven rounds of iteration (more on that below).</em></p>
+											<p>The project started as "can I get an LLM to write a decent short story" and grew into a genuine content pipeline: story generation, image generation, text-to-speech narration, video assembly, captioning, thumbnailing, and scheduled upload &mdash; each stage automatable, each stage with its own failure modes to design around.</p>
+											</section>
+
+											<header>
+													<br>
+													<h3 id="architecture">Architecture</h3>
+											</header>
+											<p>The pipeline runs as five stages feeding into each other:</p>
+											<div class="row gtr-50" style="text-align:center; margin: 1.5em 0;">
+												<div class="col-4 col-6-narrower" style="margin-bottom:1em;"><span class="icon solid fa-feather-alt" style="font-size:2em;"></span><br><strong>1. Write</strong><br><span style="font-size:0.85em;">Story + premise</span></div>
+												<div class="col-4 col-6-narrower" style="margin-bottom:1em;"><span class="icon solid fa-image" style="font-size:2em;"></span><br><strong>2. Illustrate</strong><br><span style="font-size:0.85em;">Scene &amp; thumbnail art</span></div>
+												<div class="col-4 col-6-narrower" style="margin-bottom:1em;"><span class="icon solid fa-microphone" style="font-size:2em;"></span><br><strong>3. Narrate</strong><br><span style="font-size:0.85em;">Voice + captions</span></div>
+												<div class="col-4 col-6-narrower" style="margin-bottom:1em;"><span class="icon solid fa-film" style="font-size:2em;"></span><br><strong>4. Assemble</strong><br><span style="font-size:0.85em;">Video + audio mux</span></div>
+												<div class="col-4 col-6-narrower" style="margin-bottom:1em;"><span class="icon solid fa-cloud-upload-alt" style="font-size:2em;"></span><br><strong>5. Publish</strong><br><span style="font-size:0.85em;">Scheduled upload</span></div>
+											</div>
+											<p>Everything runs locally except the story-writing LLM calls. A daily scheduled job (<code>--auto</code>) handles the full run unattended; a separate manual mode lets me trigger one-off renders for testing changes before they hit the schedule.</p>
+
+											<header>
+													<br>
+													<h3 id="writing">Story Writing</h3>
+											</header>
+											<p>Stories are written by Claude, in two ways: live (per-video) and via a pre-built <strong>story pool</strong> &mdash; batches of stories generated ahead of time through Anthropic's Message Batches API at 50% of the normal cost, since batch requests don't need to run in real time. The pipeline pulls from the pool first, and only falls back to a live write when it's empty.</p>
+											<p>Story quality went through real iteration. Early scripts confused viewers, so I wrote a "Clarity Law" into the prompt: one named protagonist, at most three named characters, a linear timeline, at most three invented terms, one twist, stakes restated roughly every three scenes. I also had to teach the writer to avoid <strong>heteronyms</strong> that trip up text-to-speech &mdash; e.g. the past tense "read" (pronounced "red") gets silently rewritten to "said"/"recited" so the narration doesn't stumble.</p>
+											<p>The channel's content policy also evolved: an early no-people rule (to avoid AI-generated faces looking obviously wrong) was relaxed to "figures are welcome, just keep faces small, distant, turned-away or helmeted" once I'd solved the image-quality problems that made close-up faces the actual issue.</p>
+
+											<header>
+													<br>
+													<h3 id="visuals">Visual Generation</h3>
+											</header>
+											<p>Scene and thumbnail art is generated locally with <strong>ComfyUI</strong> running an SDXL Lightning checkpoint on an RTX 3070 Ti &mdash; fast enough (8 steps) to render a full video's worth of images without relying on a paid image API.</p>
+											<img src="images/scifystory-capital.png" style="width:100%; max-width:640px; display:block; margin:1em auto;">
+											<p>Getting these images to actually match the story was the single hardest part of the project. Early on, prompts for "space carrier" or "decoy shipyard hulk" would occasionally render something absurd &mdash; the model's strong prior for other subjects would leak through, including once literally rendering the Marvel Hulk into a battle scene because "hulk" collided with the checkpoint's training data. That got fixed by <strong>fusing nouns</strong> ("space carrier spacecraft" instead of bare "carrier"), banning specific trigger words, and reordering negative prompts so the important bans didn't get truncated past the model's token limit.</p>
+											<p>The visual style itself went through roughly seven rounds of A/B testing before landing on the current look: a gritty, realistic film-still aesthetic (muted hull tones, harsh single-source lighting, fine surface detail, restrained colour) that replaced an earlier, more "painterly" style once I decided the vivid version read as too obviously AI-generated.</p>
+											<p>To catch remaining drift automatically, I built a lightweight QC pass that uses a vision model to flag misaligned frames for review or re-roll before they ever make it into a finished video &mdash; catching issues without needing to manually review every single frame.</p>
+
+											<header>
+													<br>
+													<h3 id="voice">Narration</h3>
+											</header>
+											<p>Narration started on <strong>Kokoro</strong>, a fast local TTS model, and later migrated long-form videos to <strong>Chatterbox</strong> for higher quality (shorts stayed on Kokoro, where speed matters more than nuance). The narration pipeline supports <strong>multiple character voices</strong> &mdash; a narrator voice plus distinct voices for named characters when a story calls for dialogue &mdash; which also happens to reduce the "every video sounds identical" tell that flags mass-produced AI content.</p>
+											<p>One bug worth mentioning because of how subtle it was: video assembly used to crossfade audio at every scene-image boundary, which meant two different half-seconds of narration played <em>simultaneously</em> at every transition. The fix was to render silent video-only clips, crossfade those, and mux the untouched, unsliced narration over the top afterwards &mdash; simple once found, but it took a while to realise the bug was in the video layer, not the TTS.</p>
+
+											<header>
+													<br>
+													<h3 id="assembly">Assembly, Captions &amp; Upload</h3>
+											</header>
+											<p>Finished audio and imagery are assembled into video with ffmpeg, captioned via a local Whisper model (so captioning works offline and doesn't depend on an API being up), and uploaded through the YouTube Data API with scheduling built in.</p>
+											<img src="images/scifystory-thumbnail.png" style="width:100%; max-width:480px; display:block; margin:1em auto;">
+											<p>Every upload is explicitly flagged as AI-generated / synthetic media, both via YouTube's own API field (which triggers their visible "Altered content" label) and a plain-text disclosure appended to the description &mdash; this felt like the right default given how much of the pipeline is automated.</p>
+
+											<header>
+													<br>
+													<h3 id="iteration">Debugging in Public</h3>
+											</header>
+											<p>A few incidents stand out as the kind of thing you only learn by shipping:</p>
+											<ul>
+												<li>A rendering pass once produced a frame that, unmistakably, was the Marvel Hulk &mdash; in the middle of a serious space-battle story. It shipped before I caught it, and had to be swapped out on a live video.</li>
+												<li>An audit of a batch of "finished" videos found roughly half had some form of subject or setting drift (space scenes rendering as ocean/terrain, capital ships rendering as battle-mechs) that wasn't visible without a systematic review pass &mdash; which is what motivated building the automated QC step.</li>
+												<li>A full visual style change was only locked in after direct, iterative feedback ("tone down the colours", "less painterly, more gritty realism") across roughly seven rounds of side-by-side image comparisons.</li>
+											</ul>
+											<p>None of these were fatal, but all of them were the kind of failure that only shows up at real scale &mdash; one video looks fine, a hundred videos exposes the pattern.</p>
+
+											<header>
+													<br>
+													<h3 id="stack">Tech Stack</h3>
+											</header>
+											<ul>
+												<li><strong>Story generation:</strong> Claude (Anthropic API + Message Batches API for pre-generated story pools)</li>
+												<li><strong>Image generation:</strong> ComfyUI, SDXL Lightning checkpoint, local GPU inference</li>
+												<li><strong>Narration:</strong> Kokoro (shorts) &amp; Chatterbox (long-form) local TTS, multi-voice casting</li>
+												<li><strong>Captioning:</strong> faster-whisper (local, offline)</li>
+												<li><strong>Assembly:</strong> ffmpeg</li>
+												<li><strong>Publishing:</strong> YouTube Data API v3, scheduled uploads, synthetic-media disclosure</li>
+												<li><strong>QC:</strong> vision-model-based drift detection on generated frames</li>
+											</ul>
+
+											<header>
+													<br>
+													<h3 id="reflection">Reflection</h3>
+											</header>
+											<p>The interesting engineering problems here weren't the individual API calls &mdash; those are all well-documented and straightforward on their own. It was making the whole thing reliable and hands-off end to end: catching quiet failure modes (image drift, doubled audio, heteronym mispronunciations), building fallbacks for every external dependency (pooled stories and baked image prompts both exist specifically so a render can survive an API outage), and being willing to throw out and redo an entire visual style once it stopped meeting the bar, rather than settling for "good enough."</p>
+										</div>
+								</div>
+							</div>
+						</section>
+
+				</article>
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="https://github.com/Taran-Warren" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+					</ul>
+
+					<ul class="copyright">
+						<li>&copy; Taran Warren</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

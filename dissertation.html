@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Dissertation - Intracranial Haemorrhage Detection</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="left-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">TaranWarren <span>Portfolio</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html">Welcome</a></li>
+							<li class="submenu current">
+								<a href="#">Projects</a>
+								<ul>
+									<li><a href="left-sidebar.html">Pterodactyl</a></li>
+									<li><a href="youtube-pipeline.html">YouTube Auto-Pipeline</a></li>
+									<li class="current"><a href="dissertation.html">Dissertation</a></li>
+									<li><a href="contact.html">Contact</a></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon solid fa-brain"></span>
+						<h2>Deep Learning for <strong>Intracranial Haemorrhage</strong> Detection</h2>
+						<p>My final-year dissertation: a multi-label CNN pipeline for classifying brain haemorrhage types from CT scans &mdash; and the data-leakage bug that made the first results too good to be true.</p>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style4 container">
+
+							<div class="row gtr-150">
+							<div class="col-4 col-12-narrower">
+
+							    <!-- Sidebar -->
+								<div class="sidebar">
+
+								    <div class="scroll-nav">
+										<br><br><br>
+								        <a href="#overview">Overview</a>
+
+								        <a href="#dataset">Dataset</a>
+
+								        <a href="#pipeline">Pipeline</a>
+
+								        <a href="#imbalance">Class Imbalance</a>
+
+								        <a href="#training">Training</a>
+
+								        <a href="#results">Results</a>
+
+								        <a href="#leakage">The Slice Leakage Finding</a>
+
+								        <a href="#discussion">Discussion</a>
+
+								        <a href="#conclusion">Conclusion</a>
+
+								        <a href="#references">References</a>
+								    </div>
+
+								</div>
+
+
+								</div>
+								<div class="col-8 col-12-narrower imp-narrower">
+
+									<!-- Content -->
+										<div class="content">
+											<section>
+											<header>
+							                	<h3 id="overview">Overview</h3>
+											</header>
+											<p>Intracranial haemorrhage (ICH) &mdash; bleeding inside the skull &mdash; is a life-threatening condition where fast, accurate diagnosis directly affects patient outcomes. Diagnosis today relies on radiologists manually reading CT scans, a process that is slow, dependent on scarce specialist availability, and vulnerable to fatigue and human error.</p>
+											<p>This dissertation builds a <strong>multi-label deep learning pipeline</strong> that detects and classifies six haemorrhage subtypes simultaneously &mdash; Epidural, Subdural, Subarachnoid, Intraparenchymal, Intraventricular and Chronic &mdash; from a single CT slice, using an EfficientNet-B1 backbone trained on the public CQ500 dataset.</p>
+											<img src="images/diss-ct-scan.jpg" style="max-width:260px; display:block; margin:1em auto;">
+											<p style="text-align:center;"><em>A single CT brain slice from the CQ500 dataset &mdash; the raw input the pipeline works from.</em></p>
+											<p>Unlike a lot of published work in this space, the project's real contribution isn't just the model &mdash; it's a demonstration of how an evaluation methodology bug (slice leakage, more below) can silently inflate a medical imaging model's reported performance, and what fixing it actually costs.</p>
+											</section>
+
+											<header>
+													<br>
+													<h3 id="dataset">Dataset</h3>
+											</header>
+											<p>The RSNA intracranial haemorrhage dataset was the "gold standard" option &mdash; large and well annotated &mdash; but at ~500GB and 874,037 files it was out of scope for a single-machine student project. Instead the pipeline uses <strong>CQ500</strong> (Chilamkurthy et al., 2018): a smaller, publicly available dataset professionally annotated by three senior radiologists, with 491 unique studies.</p>
+											<p>CQ500 ships as raw DICOM &mdash; a rich but heavy medical imaging format carrying scan metadata that's clinically valuable but useless for training an image classifier. Almost all of the preprocessing work below exists to strip that down to something a CNN can learn from efficiently.</p>
+
+											<header>
+													<br>
+													<h3 id="pipeline">The Pipeline</h3>
+											</header>
+											<p>The project follows a full pipeline from raw scan to trained classifier: preprocessing, model development, and evaluation.</p>
+											<img src="images/diss-pipeline-overview.png" style="width:100%; max-width:640px; display:block; margin:0 auto;">
+											<p>Model selection was done by prototyping ResNet-18, EfficientNet-B0 and EfficientNet-B1 on a smaller subset. All three learned (~60% accuracy after 10 epochs), but EfficientNet-B1 gave the best trade-off of accuracy vs. training cost, so it became the backbone for the full project.</p>
+											<p>The preprocessing stage turned out to matter as much as the model choice:</p>
+											<img src="images/diss-preprocessing.png" style="width:100%; max-width:640px; display:block; margin:0 auto;">
+											<ul>
+												<li><strong>DICOM &rarr; PNG:</strong> strips the heavy embedded metadata that isn't relevant to classification.</li>
+												<li><strong>Windowing:</strong> CT scans store pixel intensity in Hounsfield Units across a range standard images can't represent. Three clinically relevant windows &mdash; brain, subdural and bone &mdash; were extracted to highlight different haemorrhage characteristics.</li>
+												<li><strong>Channel engineering:</strong> the three windows were mapped onto the R, G and B channels respectively, so a single three-channel image carries three different clinical views instead of one greyscale scan repeated three times &mdash; giving the model richer input for free.</li>
+												<li><strong>Label alignment:</strong> haemorrhage annotations (from the BHX label set) were joined to each CT slice via its DICOM SOP instance UID, so every image maps to the correct ground-truth label.</li>
+												<li><strong>Normalisation &amp; tensor caching:</strong> intensities were normalised for stable training, and pre-processed tensors were cached to disk so images didn't need re-decoding every epoch &mdash; this alone cut per-epoch training time from ~20 minutes to under 5.</li>
+											</ul>
+
+											<header>
+													<br>
+													<h3 id="imbalance">Dealing with Class Imbalance</h3>
+											</header>
+											<p>Medical imaging datasets are almost never balanced, and CQ500 was no exception &mdash; fewer than a quarter of slices contain a haemorrhage at all, and the rarest class (Epidural) makes up just 0.5% of the data. Left unaddressed, this collapses into a model that scores well by simply predicting "negative" for everything.</p>
+											<p>Three techniques were combined to fight this:</p>
+											<ul>
+												<li><strong>Class-based weighting</strong> &mdash; correctly identifying a haemorrhage was weighted 3x higher than a correct negative, reflecting the real-world asymmetry: a missed haemorrhage risks a fatality, a false alarm risks a second scan.</li>
+												<li><strong>Stratified sampling</strong> &mdash; the train/validation split was built class-by-class rather than as one random split, so rare classes like Epidural weren't at risk of ending up almost entirely in one partition.</li>
+												<li><strong>Rare-class oversampling</strong> &mdash; extra copies of rare positive cases were added to the training set, accepting a small overfitting risk in exchange for the model actually seeing enough of them to learn from.</li>
+											</ul>
+
+											<header>
+													<br>
+													<h3 id="training">Training Optimisation</h3>
+											</header>
+											<p>Several techniques targeted training stability and speed, all run on a single machine with limited compute:</p>
+											<ul>
+												<li><strong>Transfer learning:</strong> a pretrained EfficientNet-B1 backbone, fine-tuned in <strong>two stages</strong> &mdash; the classification head trained alone for 5 epochs, then the full backbone unfrozen with a lowered learning rate to avoid destabilising the pretrained features.</li>
+												<li><strong>CUDA prefetching</strong> to keep the GPU fed, since Windows made multi-worker data loading unstable at 1&ndash;4 workers.</li>
+												<li><strong>Automatic Mixed Precision (AMP)</strong>, roughly doubling usable batch size within the same GPU memory budget.</li>
+												<li><strong>Weight decay + early stopping</strong> (monitoring a blended AUC/F1 score) plus light, conservative data augmentation &mdash; no flips, since flipping brain anatomy risks teaching the model incorrect spatial patterns.</li>
+											</ul>
+
+											<header>
+													<br>
+													<h3 id="results">Results</h3>
+											</header>
+											<p>After correcting the data split (see below), the model reached a <strong>macro ROC-AUC of 0.856</strong> across all six haemorrhage types:</p>
+											<img src="images/diss-auc-chart.png" style="width:100%; max-width:640px; display:block; margin:0 auto;">
+											<p>Epidural scored highest (0.954 AUC) despite being the rarest class &mdash; likely because its distinctive biconvex shape is visually easy for a CNN to key onto. Subarachnoid scored lowest (0.764), consistent with its thin, diffuse appearance being genuinely harder to detect at the single-slice level.</p>
+											<p>AUC alone doesn't tell the whole story, though. A fixed 0.5 decision threshold produced a weak macro F1 of 0.296; per-class threshold calibration lifted that to 0.338:</p>
+											<img src="images/diss-table2-f1.png" style="width:100%; max-width:520px; display:block; margin:0 auto;">
+											<p>Precision-recall behaviour varied sharply by class &mdash; rare classes like Epidural and Subarachnoid saw precision collapse quickly as recall increased:</p>
+											<img src="images/diss-pr-curves.png" style="width:100%; max-width:480px; display:block; margin:0 auto;">
+											<p>The confusion matrices at each class's optimised threshold, and the calibration/probability-distribution plots, are below for anyone who wants the full picture:</p>
+											<div class="image-grid">
+												<img src="images/diss-confusion-matrices.png">
+												<img src="images/diss-calibration.png">
+											</div>
+											<img src="images/diss-prediction-dist.png" style="width:100%; max-width:640px; display:block; margin:1em auto 0;">
+
+											<header>
+													<br>
+													<h3 id="leakage">The Slice Leakage Finding</h3>
+											</header>
+											<p>This is the headline result of the dissertation. The first version of the model &mdash; split into train/validation <strong>at the slice level</strong> &mdash; scored a suspiciously good macro F1 of <strong>0.96</strong>, with per-class F1 between 0.94 and 0.99:</p>
+											<img src="images/diss-table1-inflated.png" style="width:100%; max-width:600px; display:block; margin:0 auto;">
+											<p>That result was competitive with, or better than, published models trained on datasets many times larger &mdash; which is exactly the kind of result that should make you suspicious rather than pleased. Investigating why led to the real finding: <strong>slice leakage</strong>.</p>
+											<p>CQ500 is a study-level dataset &mdash; each patient's CT study contains many slices taken only a few millimetres apart, so adjacent slices from the same patient are near-identical. A naive slice-level split can put two virtually identical slices from the same patient on opposite sides of the train/validation boundary. The model isn't being tested on unseen data at that point &mdash; it's being tested on an image it has effectively already memorised.</p>
+											<p>Re-doing the split at the <strong>study level</strong> &mdash; keeping every slice from a given patient entirely on one side of the split &mdash; dropped macro F1 from 0.96 down to 0.338, and macro-AUC to 0.856. That's a big, uncomfortable drop, but it's the honest number: the earlier 0.96 wasn't measuring the model's ability to generalise to new patients, it was measuring how well it could recognise images it had already seen in slightly different form.</p>
+											<p>The broader point stands beyond this one project: any medical imaging paper reporting high performance without explicitly confirming a study/patient-level split deserves a second, sceptical look.</p>
+
+											<header>
+													<br>
+													<h3 id="discussion">Discussion &amp; Limitations</h3>
+											</header>
+											<p>A few limitations are worth being upfront about. The validation set did triple duty &mdash; early stopping, threshold calibration, and final reporting &mdash; which introduces some optimism bias; a proper three-way train/validation/test split would have avoided that at the cost of shrinking an already small dataset (491 studies) further. The model also classifies slice-by-slice, with no awareness of neighbouring slices, even though haemorrhages often physically span several of them.</p>
+											<p>Future directions include training on the much larger RSNA dataset, giving the model context from adjacent slices, and aggregating slice-level predictions up to a single study-level diagnosis &mdash; which is closer to how this would actually need to work clinically.</p>
+
+											<header>
+													<br>
+													<h3 id="conclusion">Conclusion</h3>
+											</header>
+											<p>The project demonstrates that a computationally efficient CNN (EfficientNet-B1) can reach meaningful discriminative performance (0.856 macro-AUC) on multi-label ICH classification even with a small dataset and modest hardware &mdash; while also showing, very concretely, that <strong>evaluation methodology matters as much as model architecture</strong>. A model is only as trustworthy as the way it was tested, and an artificially high number is worse than a modest, honest one.</p>
+
+											<header>
+													<br>
+													<h3 id="references">References</h3>
+											</header>
+											<p style="font-size:0.9em;">Chilamkurthy, S. et al. 2018, "Development and validation of deep learning algorithms for detection of critical findings in head CT scans", arXiv:1803.05854.</p>
+											<p style="font-size:0.9em;">Flanders, A.E. et al. 2020, "Construction of a Machine Learning Dataset through Collaboration: The RSNA 2019 Brain CT Hemorrhage Challenge", Radiology: Artificial Intelligence, vol. 2, no. 3.</p>
+											<p style="font-size:0.9em;">He, K., Zhang, X., Ren, S. &amp; Sun, J. 2016, "Deep residual learning for image recognition", CVPR.</p>
+											<p style="font-size:0.9em;">Tan, M. &amp; Le, Q. 2019, "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks", ICML.</p>
+											<p style="font-size:0.9em;">Roberts, M. et al. 2021, "Common pitfalls and recommendations for using machine learning to detect and prognosticate for COVID-19 using chest radiographs and CT scans", Nature Machine Intelligence, vol. 3.</p>
+											<p style="font-size:0.9em;">Reis, E.P. et al. 2020, "Brain hemorrhage extended (BHX): Bounding box extrapolation from thick to thin slice CT images", PhysioNet.</p>
+											<p style="font-size:0.85em; margin-top:1em;"><em>Full reference list and detailed methodology available in the complete dissertation on request.</em></p>
+										</div>
+								</div>
+							</div>
+						</section>
+
+				</article>
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="https://github.com/Taran-Warren" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+					</ul>
+
+					<ul class="copyright">
+						<li>&copy; Taran Warren</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
