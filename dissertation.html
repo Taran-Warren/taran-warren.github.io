@@ -89,8 +89,10 @@
 											</header>
 											<p>Intracranial haemorrhage (ICH) &mdash; bleeding inside the skull &mdash; is a life-threatening condition where fast, accurate diagnosis directly affects patient outcomes. Diagnosis today relies on radiologists manually reading CT scans, a process that is slow, dependent on scarce specialist availability, and vulnerable to fatigue and human error.</p>
 											<p>This dissertation builds a <strong>multi-label deep learning pipeline</strong> that detects and classifies six haemorrhage subtypes simultaneously &mdash; Epidural, Subdural, Subarachnoid, Intraparenchymal, Intraventricular and Chronic &mdash; from a single CT slice, using an EfficientNet-B1 backbone trained on the public CQ500 dataset.</p>
-											<img src="images/diss-ct-scan.jpg" style="max-width:260px; display:block; margin:1em auto;">
-											<p style="text-align:center;"><em>A single CT brain slice from the CQ500 dataset &mdash; the raw input the pipeline works from.</em></p>
+											<figure class="figure narrow plain">
+												<img src="images/diss-ct-scan.jpg" alt="A single axial CT brain slice from the CQ500 dataset" />
+												<figcaption>A single CT brain slice from the CQ500 dataset &mdash; the raw input the pipeline works from.</figcaption>
+											</figure>
 											<p>Unlike a lot of published work in this space, the project's real contribution isn't just the model &mdash; it's a demonstration of how an evaluation methodology bug (slice leakage, more below) can silently inflate a medical imaging model's reported performance, and what fixing it actually costs.</p>
 											</section>
 
@@ -106,10 +108,16 @@
 													<h3 id="pipeline">The Pipeline</h3>
 											</header>
 											<p>The project follows a full pipeline from raw scan to trained classifier: preprocessing, model development, and evaluation.</p>
-											<img src="images/diss-pipeline-overview.png" style="width:100%; max-width:640px; display:block; margin:0 auto;">
+											<figure class="figure wide">
+												<img src="images/diss-pipeline-overview.png" alt="Block diagram of the proposed ICH detection method" />
+												<figcaption>Overall pipeline: preprocessing, model development and evaluation.</figcaption>
+											</figure>
 											<p>Model selection was done by prototyping ResNet-18, EfficientNet-B0 and EfficientNet-B1 on a smaller subset. All three learned (~60% accuracy after 10 epochs), but EfficientNet-B1 gave the best trade-off of accuracy vs. training cost, so it became the backbone for the full project.</p>
 											<p>The preprocessing stage turned out to matter as much as the model choice:</p>
-											<img src="images/diss-preprocessing.png" style="width:100%; max-width:640px; display:block; margin:0 auto;">
+											<figure class="figure wide">
+												<img src="images/diss-preprocessing.png" alt="The preprocessing pipeline from DICOM through to a pre-processed dataset" />
+												<figcaption>Preprocessing: DICOM &rarr; PNG, windowing, channel engineering, resizing, normalisation, label alignment and tensor caching.</figcaption>
+											</figure>
 											<ul>
 												<li><strong>DICOM &rarr; PNG:</strong> strips the heavy embedded metadata that isn't relevant to classification.</li>
 												<li><strong>Windowing:</strong> CT scans store pixel intensity in Hounsfield Units across a range standard images can't represent. Three clinically relevant windows &mdash; brain, subdural and bone &mdash; were extracted to highlight different haemorrhage characteristics.</li>
@@ -147,25 +155,40 @@
 													<h3 id="results">Results</h3>
 											</header>
 											<p>After correcting the data split (see below), the model reached a <strong>macro ROC-AUC of 0.856</strong> across all six haemorrhage types:</p>
-											<img src="images/diss-auc-chart.png" style="width:100%; max-width:640px; display:block; margin:0 auto;">
+											<figure class="figure wide">
+												<img src="images/diss-auc-chart.png" alt="Bar chart of ROC-AUC per haemorrhage class" />
+												<figcaption>Per-class ROC-AUC after correcting the data split. Macro-AUC: 0.856.</figcaption>
+											</figure>
 											<p>Epidural scored highest (0.954 AUC) despite being the rarest class &mdash; likely because its distinctive biconvex shape is visually easy for a CNN to key onto. Subarachnoid scored lowest (0.764), consistent with its thin, diffuse appearance being genuinely harder to detect at the single-slice level.</p>
 											<p>AUC alone doesn't tell the whole story, though. A fixed 0.5 decision threshold produced a weak macro F1 of 0.296; per-class threshold calibration lifted that to 0.338:</p>
-											<img src="images/diss-table2-f1.png" style="width:100%; max-width:520px; display:block; margin:0 auto;">
+											<figure class="figure medium">
+												<img src="images/diss-table2-f1.png" alt="Table of AUC and F1 at fixed and optimised thresholds per class" />
+												<figcaption>Per-class AUC and F1 at a fixed 0.5 threshold versus per-class optimised thresholds.</figcaption>
+											</figure>
 											<p>Precision-recall behaviour varied sharply by class &mdash; rare classes like Epidural and Subarachnoid saw precision collapse quickly as recall increased:</p>
-											<img src="images/diss-pr-curves.png" style="width:100%; max-width:480px; display:block; margin:0 auto;">
+											<figure class="figure medium">
+												<img src="images/diss-pr-curves.png" alt="Per-class precision-recall curves" />
+												<figcaption>Precision-recall curves per class. Precision falls away sharply for the rarest classes.</figcaption>
+											</figure>
 											<p>The confusion matrices at each class's optimised threshold, and the calibration/probability-distribution plots, are below for anyone who wants the full picture:</p>
 											<div class="image-grid">
 												<img src="images/diss-confusion-matrices.png">
 												<img src="images/diss-calibration.png">
 											</div>
-											<img src="images/diss-prediction-dist.png" style="width:100%; max-width:640px; display:block; margin:1em auto 0;">
+											<figure class="figure wide">
+												<img src="images/diss-prediction-dist.png" alt="Predicted probability distributions for positive and negative slices per class" />
+												<figcaption>Predicted probability distributions, positives versus negatives, for each class.</figcaption>
+											</figure>
 
 											<header>
 													<br>
 													<h3 id="leakage">The Slice Leakage Finding</h3>
 											</header>
 											<p>This is the headline result of the dissertation. The first version of the model &mdash; split into train/validation <strong>at the slice level</strong> &mdash; scored a suspiciously good macro F1 of <strong>0.96</strong>, with per-class F1 between 0.94 and 0.99:</p>
-											<img src="images/diss-table1-inflated.png" style="width:100%; max-width:600px; display:block; margin:0 auto;">
+											<figure class="figure wide">
+												<img src="images/diss-table1-inflated.png" alt="Per-class classification report from the slice-level split before leakage correction" />
+												<figcaption>The original slice-level results &mdash; a macro F1 of 0.96 that turned out to be inflated by slice leakage.</figcaption>
+											</figure>
 											<p>That result was competitive with, or better than, published models trained on datasets many times larger &mdash; which is exactly the kind of result that should make you suspicious rather than pleased. Investigating why led to the real finding: <strong>slice leakage</strong>.</p>
 											<p>CQ500 is a study-level dataset &mdash; each patient's CT study contains many slices taken only a few millimetres apart, so adjacent slices from the same patient are near-identical. A naive slice-level split can put two virtually identical slices from the same patient on opposite sides of the train/validation boundary. The model isn't being tested on unseen data at that point &mdash; it's being tested on an image it has effectively already memorised.</p>
 											<p>Re-doing the split at the <strong>study level</strong> &mdash; keeping every slice from a given patient entirely on one side of the split &mdash; dropped macro F1 from 0.96 down to 0.338, and macro-AUC to 0.856. That's a big, uncomfortable drop, but it's the honest number: the earlier 0.96 wasn't measuring the model's ability to generalise to new patients, it was measuring how well it could recognise images it had already seen in slightly different form.</p>

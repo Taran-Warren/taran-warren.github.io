@@ -86,8 +86,10 @@
 							                	<h3 id="overview">Overview</h3>
 											</header>
 											<p><strong>TOWARDS TERRA</strong> is a YouTube channel of cinematic, HFY-style ("Humanity, F*** Yeah") sci-fi stories &mdash; grand fleet battles, last stands, rescues, sieges &mdash; that runs almost entirely on its own. A scheduled pipeline picks or writes a story, generates its artwork, narrates it, assembles the video, and uploads it, on a daily cadence, without me touching it. To date the channel has passed <strong>10,000 views</strong> from content produced this way.</p>
-											<img src="images/scifystory-hero.png" style="width:100%; max-width:640px; display:block; margin:1em auto;">
-											<p style="text-align:center;"><em>A hero shot from the current house visual style &mdash; the result of about seven rounds of iteration (more on that below).</em></p>
+											<figure class="figure wide plain">
+												<img src="images/scifystory-hero.png" alt="A single-seat space interceptor rendered in the current house visual style" />
+												<figcaption>A hero shot from the current house visual style &mdash; the result of about seven rounds of iteration.</figcaption>
+											</figure>
 											<p>The project started as "can I get an LLM to write a decent short story" and grew into a genuine content pipeline: story generation, image generation, text-to-speech narration, video assembly, captioning, thumbnailing, and scheduled upload &mdash; each stage automatable, each stage with its own failure modes to design around.</p>
 											</section>
 
@@ -118,7 +120,10 @@
 													<h3 id="visuals">Visual Generation</h3>
 											</header>
 											<p>Scene and thumbnail art is generated locally with <strong>ComfyUI</strong> running an SDXL Lightning checkpoint on an RTX 3070 Ti &mdash; fast enough (8 steps) to render a full video's worth of images without relying on a paid image API.</p>
-											<img src="images/scifystory-capital.png" style="width:100%; max-width:640px; display:block; margin:1em auto;">
+											<figure class="figure wide plain">
+												<img src="images/scifystory-capital.png" alt="A capital ship rendered with dual-temperature lighting against a starfield" />
+												<figcaption>Capital-ship hero shot: dual light temperatures, worn hull panelling and scale cues.</figcaption>
+											</figure>
 											<p>Getting these images to actually match the story was the single hardest part of the project. Early on, prompts for "space carrier" or "decoy shipyard hulk" would occasionally render something absurd &mdash; the model's strong prior for other subjects would leak through, including once literally rendering the Marvel Hulk into a battle scene because "hulk" collided with the checkpoint's training data. That got fixed by <strong>fusing nouns</strong> ("space carrier spacecraft" instead of bare "carrier"), banning specific trigger words, and reordering negative prompts so the important bans didn't get truncated past the model's token limit.</p>
 											<p>The visual style itself went through roughly seven rounds of A/B testing before landing on the current look: a gritty, realistic film-still aesthetic (muted hull tones, harsh single-source lighting, fine surface detail, restrained colour) that replaced an earlier, more "painterly" style once I decided the vivid version read as too obviously AI-generated.</p>
 											<p>To catch remaining drift automatically, I built a lightweight QC pass that uses a vision model to flag misaligned frames for review or re-roll before they ever make it into a finished video &mdash; catching issues without needing to manually review every single frame.</p>
@@ -135,7 +140,10 @@
 													<h3 id="assembly">Assembly, Captions &amp; Upload</h3>
 											</header>
 											<p>Finished audio and imagery are assembled into video with ffmpeg, captioned via a local Whisper model (so captioning works offline and doesn't depend on an API being up), and uploaded through the YouTube Data API with scheduling built in.</p>
-											<img src="images/scifystory-thumbnail.png" style="width:100%; max-width:480px; display:block; margin:1em auto;">
+											<figure class="figure medium plain">
+												<img src="images/scifystory-thumbnail.png" alt="An automatically generated video thumbnail" />
+												<figcaption>An automatically generated thumbnail from a finished video.</figcaption>
+											</figure>
 											<p>Every upload is explicitly flagged as AI-generated / synthetic media, both via YouTube's own API field (which triggers their visible "Altered content" label) and a plain-text disclosure appended to the description &mdash; this felt like the right default given how much of the pipeline is automated.</p>
 
 											<header>

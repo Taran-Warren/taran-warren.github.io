@@ -1,6 +1,15 @@
+// Remove the preload class once loaded so the template's animations/transitions
+// can run (body.is-preload disables all of them with !important).
+window.addEventListener("load", () => {
+    document.body.classList.remove("is-preload");
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const sidebar = document.querySelector('.sidebar');
+
+    // Flying pterodactyls are exclusive to the Pterodactyl project page.
+    if (!sidebar || !document.body.classList.contains('ptero-page')) return;
 
     function spawnPtero() {
 
