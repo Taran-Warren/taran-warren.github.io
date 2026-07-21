@@ -62,6 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Toggle nav submenus on click/tap (hover already handles desktop via CSS)
+    document.querySelectorAll("#header nav ul li.submenu > a").forEach(link => {
+        link.addEventListener("click", (e) => {
+            const parent = link.parentElement;
+            const isOpen = parent.classList.contains("active");
+
+            document.querySelectorAll("#header nav ul li.submenu.active")
+                .forEach(li => { if (li !== parent) li.classList.remove("active"); });
+
+            if (link.getAttribute("href") === "#") {
+                e.preventDefault();
+                parent.classList.toggle("active", !isOpen);
+            }
+        });
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest("#header nav ul li.submenu")) {
+            document.querySelectorAll("#header nav ul li.submenu.active")
+                .forEach(li => li.classList.remove("active"));
+        }
+    });
+
+});
+document.addEventListener("DOMContentLoaded", () => {
+
     const links = document.querySelectorAll(".scroll-nav a");
     const sections = Array.from(links).map(link =>
         document.querySelector(link.getAttribute("href"))
