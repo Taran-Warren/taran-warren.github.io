@@ -39,9 +39,9 @@
 				<article id="main">
 
 					<header class="special container">
-						<span class="icon solid fa-laptop"></span>
-						<h2>Behold the <strong>Pterodactyl</strong></h2>
-						<p>This was a group robotics project</p>
+						<span class="icon solid fa-dragon"></span>
+						<h2>The <strong>Animatronic Pterodactyl</strong></h2>
+						<p>A group robotics project: from 2D concept, through virtual prototyping, to a working 3D-printed model with ligament-actuated wings.</p>
 					</header>
 
 					<!-- One -->
@@ -108,10 +108,10 @@
 												<p>After initial design and toning back the scale of the project. A more basic approach was developed where the pterodactyl would stay in the flying position and would flap its wings based on a ligament inspired pulley system. A motor (or manual input in the prototype) would apply force to the string connected to the upper wing which would raise it into the air. This was countered by an elastic string to restore it to the downward position and stop the wings from going limp when held in a flipped orientation. </p>
 												<p>As seen below are the early design iterations developed to contain the ligaments and allow them to operate:</p>
 												<div class="image-grid">
-												    <img src="images/EyeSystem.png" alt="">
-												    <img src="images/rollerSystem.png" alt="">
-												    <img src="images/internalRollers.png" alt="">
-												    <img src="images/internalDoubleRollers.png" alt="">
+												    <img src="images/EyeSystem.png" alt="External loop guides inspired by fishing-rod eyes">
+												    <img src="images/rollerSystem.png" alt="External roller guides">
+												    <img src="images/internalRollers.png" alt="Roller system moved internally">
+												    <img src="images/internalDoubleRollers.png" alt="Mirrored internal rollers for both tension lines">
 												</div>
 												<p>Image 1: External loop guides (inspired by eyes on fishing rods) this approach used a set of raised rings extended out of the arm that would guide the tension lines. Although mechanically simple it was unsuitable for a 3D printed plastic model due to its fragility at the small scales.</p>
 												<p>Image 2: External roller guides this approach was similar to Image 1. Its more robust design fixed many of the issues show previously. However, due to wanting a continuous outer skin to wrap the wings this was not suitable. This is because it would interfere with the skin and must stab though it. Either cutting it or having large protrusions in the skin.</p>
@@ -123,7 +123,10 @@
 													<h3 id = "management">Project Management</h3>
 											</header>
 											<p>A Gantt chart was used to structure the develeopment process and ensure deadlines where met. It is broken down into 5 stages concept, design, model development, preproduction and production. This helpeed keep all aspects of the project on track and allowed all parts to come together seamlessly seen below</p>
-											<img src="images/gantChart.png" style="width:100%; max-width:500px;">
+											<figure class="figure medium">
+												<img src="images/gantChart.png" alt="Gantt chart showing the five project stages" />
+												<figcaption>Gantt chart used to structure the project across its five stages: concept, design, model development, preproduction and production.</figcaption>
+											</figure>
 											<header>
 													<br>
 													<h3 id = "virtual">Virtual Prototyping</h3>
@@ -160,7 +163,10 @@
 											<p>The internal structure of the model was designed to be both functional and manufacturable.</p>
 											<P>Key design features include:</P>
 											<p>The top half of the body is a hollowed internal cavity allowing the ligament system to route internally. This allowed for both the manual and future motorised actuation. Having all mechanics internally allows for maximum function while keeping a more realistic external appearance. The below image shows where the shoulders enter the cavity (Sun and Lueth, 2021).</p>
-											<img src="images/insidePt.PNG" style="width:100%; max-width:500px;">
+											<figure class="figure medium">
+												<img src="images/insidePt.PNG" alt="Cutaway view of the hollow body cavity showing where the shoulders enter" />
+												<figcaption>The hollowed body cavity, showing where the shoulders enter and the internal pillars that keep the tension lines smoothly routed.</figcaption>
+											</figure>
 											<p>Internal pillars as shown in the above image were implemented to prevent internal snagging and maintain smooth curvature of tension lines. This improves the mechanical efficiency and reduces strain on the future motors and the human operators. Reducing overall wear giving the model a longer lifetime. </p>
 											<p>Integrated base socket gives a seamless connection between the base and the body. The hollow top of the base allows for the ligaments to be accessible from the base. Giving access for manual control systems. This was crucial for the manual operation.</p>
 											<p>The head and legs serve no functional use and are purely decorative so were designed as static structural elements. This allowed all focus to be on the mechanical system design without adding additional complexity.</p>
@@ -170,10 +176,16 @@
 											</header>
 											<p>3D printing took the project from simulations and theory to a realised product. PETG was used as the print substance this was due to its relative ease to print with as opposed to others (ABS), its better impact and shatter resistance than PLA, strong temperature resistance and layer adhesion. Additionally, its strong chemical and UV resistance although useful were not deciding factors as the final product will be enclosed in a skin (Gibson et al., 2021; Bogue, 2013)</p>
 											<p>The initial prototype validated the choice for print in place joints, significantly reducing the assembly requirements. The structural rigidity was sufficient, and the weight remained low allowing for future motors to be cheaper and take less wear.</p>
-											<img src="images/Prototype.png" style="width:100%; max-width:500px;">
+											<figure class="figure medium">
+												<img src="images/Prototype.png" alt="The first 3D-printed prototype showing a poorly printed shoulder section" />
+												<figcaption>The first printed prototype. One shoulder section printed poorly &mdash; the internal rollers were below the printer's tolerance and could not spin.</figcaption>
+											</figure>
 											<p>However, the internal rollers were incapable of spinning. As seen, I the above image one section of the shoulder printed poorly resulting a messy web. The prototype still functioned. This was due to being too small for the tolerance of the printer. This was mitigated by removing the rollers from the print leaving the bars they were set on. This allowed it to function without rollers. The final model’s rollers have a slice in them that allow the natural stretch of the material to be pried open and snap onto the pins. </p>
 											<p>The final model is shown below</p>
-											<img src="images/finished.png" style="width:100%; max-width:500px;">
+											<figure class="figure medium">
+												<img src="images/finished.png" alt="The finished 3D-printed pterodactyl model" />
+												<figcaption>The final model, with sliced rollers that snap onto their pins and a fully internal ligament system.</figcaption>
+											</figure>
 											<header>
 													<br>
 													<h3 id = "technologies">Technologies</h3>
@@ -192,13 +204,19 @@
 													<h3 id = "costs">Costs</h3>
 											</header>
 											<p>Shown below is the cost breakdown of the prototype.</p>
-											<img src="images/Cost.png" style="width:100%; max-width:500px;">
+											<figure class="figure medium">
+												<img src="images/Cost.png" alt="Table breaking down the prototype costs" />
+												<figcaption>Cost breakdown for the prototype.</figcaption>
+											</figure>
 											<header>
 													<br>
 													<h3 id = "test">Test plan</h3>
 											</header>
 											<p>Shown below is the test plan used to evalute the many aspects of the project. All conducted tests were passed by the final model</p>
-											<img src="images/testPlan.png" style="width:100%; max-width:500px;">
+											<figure class="figure medium">
+												<img src="images/testPlan.png" alt="Test plan table listing the tests and their results" />
+												<figcaption>The test plan used to evaluate the model. All tests were passed by the final build.</figcaption>
+											</figure>
 											<header>
 													<br>
 													<h3 id ="reflection">Reflection and future improvements</h3>
